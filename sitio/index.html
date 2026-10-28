@@ -1,5 +1,7 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>San-Bri Inmobiliaria</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("sb-theme")==="dark"?"dark":"light"}catch(e){document.documentElement.dataset.theme="light"}</script>
+<title>San Bri Inmobiliaria</title>
+<meta name="description" content="San Bri Bienes Raíces: casas, apartamentos, oficinas y terrenos en venta y alquiler en Caracas y el litoral.">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -693,6 +695,198 @@ dialog{box-shadow:0 24px 64px -12px rgba(0,0,0,.3)}
 @media(max-width:600px){.dd-nav{display:none}.dd-card{flex-basis:84vw}}
 .dd-head h1{font-weight:600;font-size:clamp(28px,3.4vw,46px);letter-spacing:-.02em}
 .crumb + .dd{margin-top:16px}
+
+/* v16 (cambios del cliente, 27 oct): modo día tomado de la ilustración del Ávila y modo noche azul.
+   Día es el predeterminado. Todo color sale de estas variables. */
+:root,:root[data-theme="light"]{
+  --paper:#E3E1E2; --ink:#513F45; --line:#CBC5C8; --mist:#D9D9D9; --muted:#5F5157; --stone:#D2CDD0; --stone-2:#C2BBBF;
+  --accent:#1A3351; --accent-ink:#FFFFFF; --accent-soft:#D5DBE3; --deep:#513F45; --on-deep:#F4F2F3; --on-deep-muted:#D3C9CD;
+  --warn:#7A4F00; --warn-soft:#EFE4CC; --ok:#2C6E48; --roof:#9A1F3C; --gold:#87A4C4; --mauve:#9F949A;
+  --brand-navy:#1A3351; --brand-steel:#87A4C4; --brand-ink:#513F45; --price:#1A3351;
+  --sky:#D9D9D9; --shadow:rgba(81,63,69,.2); color-scheme:light}
+:root[data-theme="dark"]{
+  --paper:#0E141D; --ink:#E8EDF3; --line:#263243; --mist:#141C28; --muted:#98A3B3; --stone:#1D2735; --stone-2:#253142;
+  --accent:#A9C0DA; --accent-ink:#0E141D; --accent-soft:#1A2A40; --warn:#E9C27A; --warn-soft:#2B2414; --ok:#6FCF97;
+  --deep:#0A0F17; --on-deep:#FFFFFF; --on-deep-muted:#B9C7D8; --gold:#87A4C4; --roof:#E07A92; --mauve:#5E6B7E;
+  --brand-navy:#E8EDF3; --brand-steel:#87A4C4; --brand-ink:#C9D2DE; --price:#E8EDF3;
+  --sky:#141C28; --shadow:rgba(0,0,0,.5); color-scheme:dark}
+body{background:var(--paper);color:var(--ink)}
+footer{background:var(--deep);color:var(--on-deep)}
+footer p,footer li{color:var(--on-deep-muted)}
+footer h4{color:var(--on-deep)}
+footer .mini-ridge{color:var(--mauve)}
+footer button.linklike{color:inherit}
+.chat-fab{background:var(--accent);color:var(--accent-ink)}
+.mbar .btn:not(.ghost){background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+::selection{background:var(--accent);color:var(--accent-ink)}
+html{scrollbar-color:var(--mauve) var(--paper);accent-color:var(--accent);caret-color:var(--ink)}
+.price,.rail .ri-price{color:var(--price)}
+.dd-ic{color:var(--accent)}
+.dd-badge{background:var(--accent);color:var(--accent-ink)}
+header.top{background:color-mix(in srgb,var(--paper) 92%,transparent)}
+.theme-anim,.theme-anim *:not(.av-astro):not(.av-mtn):not(.knob),.theme-anim *::before,.theme-anim *::after{transition:background-color .6s ease .45s,color .6s ease .45s,border-color .6s ease .45s,fill .6s ease .45s,stroke .6s ease .45s!important}
+
+/* 1. El Ávila: cielo (color plano), sol y luna (SVG), montaña recortada (WebP con alfa) */
+.mast .wrap{padding-block:24px 8px}
+.avila{position:relative;overflow:hidden;isolation:isolate;container-type:inline-size;aspect-ratio:671/359;background:var(--sky);transition:background-color .6s ease .45s}
+.av-mtn{position:absolute;left:0;bottom:0;width:100%;height:auto;z-index:2;pointer-events:none;user-select:none;max-width:none}
+.av-night{opacity:0;transition:opacity .6s ease .45s}
+[data-theme="dark"] .av-night{opacity:1}
+.av-day{transition:opacity 0s .45s}
+[data-theme="dark"] .av-day{opacity:0;transition:opacity 0s 1.05s}
+.avila .mast-logo{position:absolute;z-index:3;left:2%;top:3%;width:33%;margin:0}
+.avila .mast-logo svg{width:100%;margin:0}
+.av-phrase{position:absolute;z-index:3;left:44%;top:18%;width:41%;margin:0;text-align:center;color:var(--brand-navy);font-weight:600;font-size:3.1cqw;line-height:1.3;letter-spacing:.04em;text-wrap:balance}
+.av-astro{position:absolute;z-index:1;left:var(--ax,87%);top:var(--ay,15%);width:var(--as,6.5%);aspect-ratio:1;overflow:visible}
+.av-sun{transform:none;opacity:1;transition:transform .7s cubic-bezier(.2,.7,.3,1) .9s,opacity 0s .9s}
+.av-moon{transform:translateY(var(--drop,420%));opacity:0;transition:transform .6s cubic-bezier(.6,0,.8,.4),opacity 0s .6s}
+[data-theme="dark"] .av-sun{transform:translateY(var(--drop,420%));opacity:0;transition:transform .6s cubic-bezier(.6,0,.8,.4),opacity 0s .6s}
+[data-theme="dark"] .av-moon{transform:none;opacity:1;transition:transform .7s cubic-bezier(.2,.7,.3,1) .9s,opacity 0s .9s}
+.av-stars{position:absolute;inset:0;z-index:1;opacity:0;transition:opacity .6s ease .45s;pointer-events:none}
+.av-stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#DCE5F0}
+[data-theme="dark"] .av-stars{opacity:.8}
+.avila .theme-sw{position:absolute;z-index:4;top:14px;right:14px}
+@media(max-width:640px){
+  .mast .wrap{padding-top:16px}
+  .avila{aspect-ratio:auto;height:min(600px,150vw);--ax:74%;--ay:31%;--as:12%;--drop:430%}
+  .av-mtn{width:230%;left:calc(50% - 161%)}
+  .avila .mast-logo{left:4%;top:14px;width:58%}
+  .av-phrase{left:5%;top:31%;width:64%;text-align:left;font-size:5.4cqw}
+  .av-stars i:nth-child(2),.av-stars i:nth-child(4),.av-stars i:nth-child(10){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .av-sun,.av-moon,[data-theme="dark"] .av-sun,[data-theme="dark"] .av-moon{transform:none!important;transition:opacity .3s ease!important}
+  .avila,.av-night,.av-stars{transition-delay:0s;transition-duration:.3s}
+  .av-day,[data-theme="dark"] .av-day{transition-delay:.3s}
+  .theme-anim,.theme-anim *:not(.av-astro):not(.av-mtn){transition-duration:.3s!important;transition-delay:0s!important}
+}
+
+/* Interruptor día / noche */
+.theme-sw{position:relative;display:inline-flex;align-items:center;justify-content:space-between;width:64px;height:32px;padding:0 8px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ink) 30%,transparent);background:color-mix(in srgb,var(--paper) 70%,transparent);backdrop-filter:blur(6px);color:var(--ink);cursor:pointer;flex:0 0 auto}
+.theme-sw svg{width:14px;height:14px;position:relative;z-index:1;transition:color .4s}
+.theme-sw .knob{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--accent);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.theme-sw[aria-checked="true"] .knob{transform:translateX(32px)}
+.theme-sw[aria-checked="false"] .i-sun,.theme-sw[aria-checked="true"] .i-moon{color:var(--accent-ink)}
+@media (prefers-reduced-motion:reduce){.theme-sw .knob{transition:none}}
+.theme-sw-top{margin-left:4px}
+nav.main button,.acct{white-space:nowrap}
+.top .wrap{gap:20px}
+@media(min-width:861px) and (max-width:1300px){nav.main{gap:18px}nav.main button,.acct{font-size:11px;letter-spacing:.08em}}
+@media(min-width:861px) and (max-width:1060px){nav.main .sell{display:none}}
+body[data-view="home"] .theme-sw-top{display:none}
+
+/* 2. Propiedades destacadas, del diseño 6 */
+.d6-sec{padding:96px 0 0;text-align:center}
+.d6-sec h2{font-weight:300;font-size:clamp(28px,3vw,42px);margin:0 0 8px}
+.d6-sec .sub{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 44px}
+.d6-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 28px;text-align:left}
+.d6-card{color:var(--ink);background:none;border:0;padding:0;cursor:pointer;text-align:left;display:grid;gap:10px;align-content:start}
+.d6-card .ph-wrap{overflow:hidden;position:relative}
+.d6-card .photo{transition:transform 1.2s var(--ease-out)}
+@media (hover:hover){.d6-card:hover .photo{transform:scale(1.05)}}
+.d6-card b{font-weight:600;font-size:16px}.d6-card .d6-meta{font-size:13px;color:var(--muted)}
+.d6-card .pp{font-weight:700;font-size:15px;color:var(--price);letter-spacing:.04em}
+.d6-card .det{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--ink);justify-self:start;padding:9px 16px;margin-top:4px;transition:background .4s,color .4s}
+.d6-card:hover .det,.d6-card:focus-visible .det{background:var(--ink);color:var(--paper)}
+@media(max-width:860px){.d6-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.d6-grid{grid-template-columns:1fr}}
+
+/* 4. Logo que abre WhatsApp */
+.wa-logo{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:45;width:60px;height:60px;border-radius:50%;background:var(--paper);border:1px solid var(--line);box-shadow:0 10px 26px -8px var(--shadow);display:grid;place-items:center;text-decoration:none;transition:transform .4s var(--ease-out)}
+.wa-logo svg.mk{width:40px;height:auto}
+.wa-logo .wa-badge{position:absolute;right:-2px;top:-2px;width:20px;height:20px;border-radius:50%;background:#1F7A4D;display:grid;place-items:center;border:2px solid var(--paper)}
+.wa-tip{position:absolute;left:calc(100% + 12px);top:50%;transform:translate(-6px,-50%);white-space:nowrap;background:var(--ink);color:var(--paper);font-size:13px;padding:7px 12px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+@media (hover:hover){.wa-logo:hover{transform:translateY(-2px)}.wa-logo:hover .wa-tip{opacity:1;transform:translate(0,-50%)}}
+.wa-logo:focus-visible .wa-tip{opacity:1;transform:translate(0,-50%)}
+.mbar .btn svg.mk{width:30px;height:auto;margin-right:2px}
+.mbar #mbar-wa .mk path,.mbar #mbar-wa .mk rect{fill:currentColor;stroke:currentColor}
+.mbar #mbar-wa .mk rect{fill:none}
+@media(max-width:720px){.wa-logo{display:none}}
+
+/* 6. Precio oculto sin sesión */
+.price-lock{display:inline-grid;gap:2px;justify-items:start}
+.price-lock .blur{filter:blur(6px);user-select:none;color:var(--price);font-weight:700}
+.price-lock .lock-txt{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:0;text-transform:none}
+.aside .price-lock .blur{font-size:clamp(30px,2.8vw,38px);font-weight:200}
+.aside .price-lock .lock-txt{font-size:14px}
+.reveal-price .price,.reveal-price .ri-price,.reveal-price .pp,.reveal-price .big{animation:unblur .7s ease both}
+@keyframes unblur{from{filter:blur(6px);opacity:.6}to{filter:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.reveal-price .price,.reveal-price .ri-price,.reveal-price .pp,.reveal-price .big{animation:none}}
+.locked-table{position:relative}
+.locked-table table{filter:blur(5px);user-select:none;pointer-events:none}
+.locked-table .lock-over{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:12px;text-align:center}
+
+/* 7. Inicio de sesión */
+.prov{display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;width:100%;border-radius:6px;font:500 15px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;cursor:pointer;letter-spacing:0;text-transform:none}
+.prov svg{width:18px;height:18px;flex:0 0 auto}
+.prov-apple{background:#000;color:#fff;border:1px solid #000}
+[data-theme="dark"] .prov-apple{background:#fff;color:#000;border-color:#fff}
+.prov-google{background:#fff;color:#1F1F1F;border:1px solid #747775;font-family:Roboto,Arial,sans-serif}
+.prov-fb{background:#1877F2;color:#fff;border:1px solid #1877F2}
+.or{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted)}.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.code-in{font-size:24px!important;letter-spacing:.4em;text-align:center}
+.mail{border:1px solid var(--line);background:var(--paper);display:grid}
+.mail-h{padding:14px 18px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);display:grid;gap:2px}
+.mail-h b{color:var(--ink);font-weight:600}
+.mail-b{padding:20px 18px;white-space:pre-wrap;font-size:15px}
+.por{background:var(--warn-soft);color:var(--warn);padding:1px 6px;font-size:.9em;font-weight:500;white-space:normal}
+
+/* 8. Cookies */
+.ck{position:fixed;z-index:60;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:760px;margin:0 auto;background:var(--paper);color:var(--ink);border:1px solid var(--line);box-shadow:0 24px 64px -12px var(--shadow);padding:20px 22px;display:grid;gap:14px}
+.ck p{font-size:14px;line-height:1.6}
+.ck-btns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ck-btns .btn{min-height:46px;padding:0 10px}
+@media(max-width:720px){.ck{bottom:calc(84px + env(safe-area-inset-bottom,0px));padding:16px}}
+@media(max-width:400px){.ck-btns .btn{letter-spacing:.06em}}
+.ck-row{display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:start;padding:14px 0;border-top:1px solid var(--line)}
+.ck-row b{font-weight:600}.ck-row p{grid-column:1;font-size:14px;color:var(--muted)}
+.ck-row input{width:20px;height:20px;grid-row:1/span 2;grid-column:2;margin-top:2px}
+.legal{max-width:760px;padding-top:48px;display:grid;gap:18px}
+.legal h2{font-size:clamp(22px,2.4vw,28px);font-weight:500;margin-top:18px}
+.legal ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.legal-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.legal-tabs button{background:none;border:1px solid var(--line);padding:8px 14px;cursor:pointer;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.legal-tabs button[aria-current="page"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.draft{border-left:3px solid var(--warn);background:var(--warn-soft);color:var(--warn);padding:12px 16px;font-size:14px}
+.acct-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:8px}
+@media(max-width:720px){.acct-grid{grid-template-columns:1fr}}
+.panel{border:1px solid var(--line);padding:24px;display:grid;gap:12px;align-content:start}
+.panel h2{font-size:22px;font-weight:500}
+pre.json{max-height:50vh;overflow:auto;background:var(--mist);padding:14px;font-size:12px;line-height:1.5;margin:0;white-space:pre-wrap;word-break:break-word}
+
+/* 9. Panel */
+.adm-bar{display:flex;gap:10px 20px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted);margin:-8px 0 20px}
+.adm-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px}
+.heat{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.heat i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.heat.frio i{background:var(--gold)}.heat.tibio i{background:#C08A2E}.heat.caliente i{background:var(--roof)}
+.tbl tr.click{cursor:pointer}.tbl tr.click:hover td{background:var(--mist)}
+.tbl button.lnk{background:none;border:0;padding:0;color:inherit;font:inherit;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:28px}
+.kpi{border:1px solid var(--line);padding:16px 18px;display:grid;gap:4px}
+.kpi span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.kpi b{font-size:30px;font-weight:300;line-height:1.1}
+@media(max-width:720px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+@media(max-width:860px){.charts{grid-template-columns:1fr}}
+.chart{border:1px solid var(--line);padding:20px;display:grid;gap:12px;min-width:0}
+.chart h3{font-size:15px;font-weight:600}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.chart .bar{fill:var(--accent)}.chart .bar:hover{opacity:.8}
+.chart text{fill:var(--muted);font-size:11px;font-family:var(--text)}
+.chart text.v{fill:var(--ink);font-weight:600}
+.chart .grid line{stroke:var(--line)}
+.ai{border:1px solid var(--line);border-left:3px solid var(--accent);padding:20px;display:grid;gap:10px;background:var(--paper)}
+.ai dl{display:grid;grid-template-columns:200px 1fr;gap:8px 16px;margin:0;font-size:14px}
+.ai dt{color:var(--muted);font-weight:600}.ai dd{margin:0}
+@media(max-width:600px){.ai dl{grid-template-columns:1fr}.ai dt{margin-top:6px}}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:0;font-size:14px}
+.tl li{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.tl time{color:var(--muted)}
+.ficha{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;margin-top:20px}
+@media(max-width:860px){.ficha{grid-template-columns:1fr}}
+.tpl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+@media(max-width:860px){.tpl{grid-template-columns:1fr}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -707,14 +901,15 @@ dialog{box-shadow:0 24px 64px -12px rgba(0,0,0,.3)}
 </defs></svg>
 <header class="top">
   <div class="wrap">
-    <button class="logo" data-go="home" aria-label="San-Bri Bienes Raíces, inicio"><svg viewBox="90 175 760 420" aria-hidden="true"><use href="#sb-mark"/></svg></button>
+    <button class="logo" data-go="home" aria-label="San Bri Bienes Raíces, inicio"><svg viewBox="90 175 760 420" aria-hidden="true"><use href="#sb-mark"/></svg></button>
     <nav class="main" id="main-nav" aria-label="Principal">
       <button data-go="venta">Comprar</button>
       <button data-go="alquiler">Alquilar</button>
-      <button data-go="zonas">Zonas</button>
+      <button data-go="zonas">Presencia de San Bri</button>
       <button data-go="nosotros">Nosotros</button>
       <button data-go="vender" class="sell">¿Quieres vender tu inmueble?</button>
     </nav>
+    <button class="theme-sw theme-sw-top" role="switch" aria-checked="false" aria-label="Modo noche" data-theme-sw><span class="knob" aria-hidden="true"></span><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
     <button class="acct" id="acct"></button>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 3h14M1 8h14M1 13h14" stroke="currentColor" stroke-width="1.5"/></svg>Menú</button>
   </div>
@@ -726,7 +921,7 @@ dialog{box-shadow:0 24px 64px -12px rgba(0,0,0,.3)}
   <div class="wrap">
     <div>
       <svg class="mini-ridge" viewBox="0 0 1200 120" aria-hidden="true"><path d="M0 104 L80 92 L150 96 L230 70 L300 76 L360 52 L420 58 L470 34 L520 40 L560 22 L610 30 L650 18 L700 26 L760 20 L820 38 L880 34 L940 56 L1010 62 L1080 84 L1140 88 L1200 100" fill="none" stroke="currentColor" stroke-width="5"/></svg>
-      <p style="color:var(--on-deep);font-family:var(--display);font-size:22px">San-Bri Bienes Raíces</p>
+      <p style="color:var(--on-deep);font-family:var(--display);font-size:22px">San Bri Bienes Raíces</p>
       <p>Más de 30 años vendiendo y alquilando inmuebles en Caracas.</p>
     </div>
     <div>
@@ -741,10 +936,10 @@ dialog{box-shadow:0 24px 64px -12px rgba(0,0,0,.3)}
     <div>
       <h4>Información</h4>
       <ul>
-        <li><button class="linklike" data-go="venta" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Comprar</button> · <button class="linklike" data-go="alquiler" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Alquilar</button> · <button class="linklike" data-go="zonas" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Zonas</button></li>
+        <li><button class="linklike" data-go="venta" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Comprar</button> · <button class="linklike" data-go="alquiler" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Alquilar</button> · <button class="linklike" data-go="zonas" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Presencia de San Bri</button></li>
         <li><button class="linklike" data-go="nosotros" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Nosotros</button></li>
-        <li><button class="linklike" data-go="legal" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Política de privacidad</button></li>
-        <li><button class="linklike" data-go="legal" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Términos de uso</button></li>
+        <li><button class="linklike" data-legal="privacidad" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Política de privacidad</button> · <button class="linklike" data-legal="cookies" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Política de cookies</button></li>
+        <li><button class="linklike" data-legal="terminos" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Términos de uso</button> · <button class="linklike" id="ck-open" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Cookies</button></li>
         <li><button class="linklike" data-go="admin" style="background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline;text-underline-offset:3px">Acceso para el equipo</button></li>
       </ul>
     </div>
@@ -753,26 +948,48 @@ dialog{box-shadow:0 24px 64px -12px rgba(0,0,0,.3)}
 
 <div class="mbar" aria-label="Contacto rápido">
   <a class="btn ghost" href="tel:+584141356110">Llamar</a>
-  <a class="btn" id="mbar-wa" href="https://wa.me/584141356110" target="_blank" rel="noopener">WhatsApp</a>
+  <a class="btn" id="mbar-wa" data-wa href="https://wa.me/584141356110" target="_blank" rel="noopener" aria-label="Escribir a San Bri por WhatsApp"><svg class="mk" viewBox="364 436 414 156" aria-hidden="true"><path d="M372 498 L440 442 L508 498 L488 498 L440 459 L392 498Z" fill="var(--roof)"/><rect x="410" y="512" width="50" height="76" rx="11" fill="none" stroke="var(--brand-steel)" stroke-width="18"/><path d="M469 534 H772 V582 H738 V568 H722 V582 H688 V558 H469Z" fill="var(--brand-steel)"/></svg>WhatsApp</a>
 </div>
+
+<a class="wa-logo" id="wa-logo" data-wa href="https://wa.me/584141356110" target="_blank" rel="noopener" aria-label="Escribir a San Bri por WhatsApp"><svg class="mk" viewBox="364 436 414 156" aria-hidden="true"><path d="M372 498 L440 442 L508 498 L488 498 L440 459 L392 498Z" fill="var(--roof)"/><rect x="410" y="512" width="50" height="76" rx="11" fill="none" stroke="var(--brand-steel)" stroke-width="18"/><path d="M469 534 H772 V582 H738 V568 H722 V582 H688 V558 H469Z" fill="var(--brand-steel)"/></svg><span class="wa-badge" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></span><span class="wa-tip" aria-hidden="true">Escribir a San Bri por WhatsApp</span></a>
+
+<div class="ck" id="ck" role="region" aria-label="Aviso de cookies" hidden>
+  <p>Usamos cookies necesarias para que el sitio funcione. Con tu permiso, también medimos qué inmuebles y zonas visitas para mejorar el sitio y recomendarte propiedades. Nada de eso se activa hasta que aceptes. <button class="linklike" data-legal="cookies" style="background:none;border:0;padding:0;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit">Política de cookies</button>.</p>
+  <div class="ck-btns"><button class="btn ghost" data-ck="all">Aceptar</button><button class="btn ghost" data-ck="none">Rechazar</button><button class="btn ghost" data-ck="config">Configurar</button></div>
+</div>
+<dialog id="ck-dlg" aria-labelledby="ck-title">
+  <form class="dlg form" id="ck-form" method="dialog">
+    <div class="dlg-head"><h3 id="ck-title">Configurar cookies</h3><button type="button" class="x" data-close aria-label="Cerrar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+    <div>
+      <label class="ck-row" for="ck-nec"><b>Necesarias</b><input id="ck-nec" type="checkbox" checked disabled><p>Sesión, seguridad y tu elección de cookies y de modo día o noche. Siempre activas.</p></label>
+      <label class="ck-row" for="ck-ana"><b>Análisis</b><input id="ck-ana" type="checkbox"><p>Qué páginas, inmuebles y zonas visitas y cuánto tiempo, guardado por San Bri (sin Google Analytics).</p></label>
+      <label class="ck-row" for="ck-per"><b>Personalización</b><input id="ck-per" type="checkbox"><p>Recomendarte inmuebles según lo que has visto.</p></label>
+    </div>
+    <div class="ck-btns"><button type="button" class="btn ghost" data-ck="none">Rechazar todo</button><button type="button" class="btn ghost" data-ck="all">Aceptar todo</button><button type="submit" class="btn ghost" data-ck="save">Guardar</button></div>
+  </form>
+</dialog>
+<dialog id="mail-dlg" aria-labelledby="mail-title" style="max-width:min(560px,calc(100vw - 32px))">
+  <div class="dlg"><div class="dlg-head"><div><h3 id="mail-title">Correo de bienvenida</h3><p class="muted" style="font-size:14px">Simulado: se envía una sola vez, al crear la cuenta.</p></div><button type="button" class="x" data-close aria-label="Cerrar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+  <div id="mail-body"></div></div>
+</dialog>
+<dialog id="data-dlg" aria-labelledby="data-title" style="max-width:min(640px,calc(100vw - 32px))">
+  <div class="dlg"><div class="dlg-head"><div><h3 id="data-title">Tus datos</h3><p class="muted" style="font-size:14px">En el sitio real esto se descarga como archivo JSON.</p></div><button type="button" class="x" data-close aria-label="Cerrar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+  <pre class="json" id="data-body"></pre></div>
+</dialog>
 
 <button class="chat-fab" id="chat-fab" aria-label="Abrir chat" aria-expanded="false">
   <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z" stroke-linejoin="round"/></svg>
 </button>
-<div class="chat" id="chat" hidden role="dialog" aria-label="Chat con San-Bri">
+<div class="chat" id="chat" hidden role="dialog" aria-label="Chat con San Bri">
   <div class="chat-head"><strong>Hablemos</strong><button class="x" id="chat-close" aria-label="Cerrar chat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
   <div class="chat-body" id="chat-body" aria-live="polite"></div>
   <div class="chat-foot" id="chat-foot"></div>
 </div>
 
 <dialog id="login-dlg" aria-labelledby="login-title">
-  <form class="dlg form" id="login-form" method="dialog">
-    <div class="dlg-head"><div><h3 id="login-title">Entrar a San-Bri</h3><p class="muted" id="login-why">Para dar me gusta y comentar.</p></div><button type="button" class="x" id="login-x" aria-label="Cerrar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
-    <button type="button" class="btn ghost" id="login-google"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.2-2 3.4-5 3.4-8.5z"/><path fill="#34A853" d="M12 23.5c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.3 1.1-3.9 1.1-3 0-5.5-2-6.4-4.7H1.8v3A11.5 11.5 0 0 0 12 23.5z"/><path fill="#FBBC05" d="M5.6 14.2a6.9 6.9 0 0 1 0-4.4v-3H1.8a11.5 11.5 0 0 0 0 10.4z"/><path fill="#EA4335" d="M12 5.1c1.7 0 3.2.6 4.4 1.7l3.3-3.3A11.5 11.5 0 0 0 1.8 6.8l3.8 3C6.5 7.1 9 5.1 12 5.1z"/></svg>Continuar con Google</button>
-    <p class="muted" style="text-align:center;font-size:13px;margin:0">o con tu correo</p>
-    <label for="l-email">Correo<input id="l-email" type="email" required autocomplete="email" placeholder="tu@correo.com"></label>
-    <button class="btn" type="submit">Recibir enlace de acceso</button>
-    <p class="sample" style="margin:0">Vista previa: no se conecta a Google. Para probar el panel del equipo entra con admin@ejemplo.com; cualquier otro correo entra como visitante.</p>
+  <form class="dlg form" id="login-form" method="dialog" novalidate>
+    <div class="dlg-head"><div><h3 id="login-title">Entrar a San Bri</h3><p class="muted" id="login-why">Para ver precios, guardar favoritos y comentar.</p></div><button type="button" class="x" id="login-x" aria-label="Cerrar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+    <div id="login-step" class="form"></div>
   </form>
 </dialog>
 <dialog id="gal-dlg" class="gal-dlg" aria-labelledby="gal-title">
@@ -786,7 +1003,7 @@ dialog{box-shadow:0 24px 64px -12px rgba(0,0,0,.3)}
       <label for="c-name">Nombre<input id="c-name" type="text" required autocomplete="name"></label>
       <label for="c-phone">Teléfono<input id="c-phone" type="tel" required autocomplete="tel" placeholder="+58 414 000 0000"></label>
       <label for="c-when">¿Cuándo te llamamos?<select id="c-when"><option>Mañana</option><option>Tarde</option><option>Cualquier hora</option></select></label>
-      <label class="consent" for="c-ok"><input id="c-ok" type="checkbox" required><span>Acepto que San-Bri me contacte por teléfono o WhatsApp sobre mi consulta y acepto la Política de privacidad.</span></label>
+      <label class="consent" for="c-ok"><input id="c-ok" type="checkbox" required><span>Acepto que San Bri me contacte por teléfono o WhatsApp sobre mi consulta y acepto la Política de privacidad.</span></label>
       <button class="btn" type="submit">Solicitar llamada</button>
     </div>
     <div id="call-done" class="thanks" hidden><h3>Solicitud recibida</h3><p>Un asesor te llamará pronto. En esta vista previa no se guarda ni se envía nada.</p></div>
@@ -816,6 +1033,9 @@ const m2 = n => n.toLocaleString('es-VE') + ' m²';
 const sizeOf = p => p.built || p.land;
 const title = p => `${p.type} en ${p.zone}${sizeOf(p) ? ' · ' + m2(sizeOf(p)) : ''}`;
 const priceFor = (p, op) => op === 'alquiler' ? (p.rent ? fmt(p.rent) + '/mes' : 'Precio a consultar') : (p.sale ? fmt(p.sale) : 'Precio a consultar');
+// 6. Sin sesión el precio no se muestra: va un marcador borroso. En producción el servidor no envía el precio real.
+const PH = op => op === 'alquiler' ? 'US$ 0.000/mes' : 'US$ 000.000';
+const priceView = (p, op) => user ? priceFor(p, op) : `<span class="price-lock"><span class="blur" aria-hidden="true">${PH(op)}</span><span class="lock-txt">Inicia sesión para ver el precio</span></span>`;
 const isPublic = p => ['disponible','reservado'].includes(p.status);
 const visible = op => P.filter(p => p.op.includes(op) && isPublic(p));
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -840,7 +1060,7 @@ const byCode = c => P.find(p => p.code === c);
 const nFrames = p => IMG[p.code]?.[2] || 0;
 
 
-// Zone guides per municipio. Scores are San-Bri's own 1-5 estimates, to verify with the agents; no official data source.
+// Zone guides per municipio. Scores are San Bri's own 1-5 estimates, to verify with the agents; no official data source.
 const MUNIS = [
  {id:'chacao', name:'Chacao', state:'Miranda', zones:['Altamira','La Castellana','Campo Alegre','El Rosal'],
   intro:'El centro financiero y comercial del este de Caracas. Calles con aceras, plazas, restaurantes y el Metro a pocas cuadras.',
@@ -920,6 +1140,7 @@ function go(view, extra = {}) {
     if (b.hasAttribute('aria-current')) b.setAttribute('aria-current','page');
   });
   setWhatsApp(view === 'prop' ? state.code : null);
+  trackView();
 }
 
 function card(p, op) {
@@ -928,18 +1149,25 @@ function card(p, op) {
     <div class="meta">
       <h3>${esc(title(p))}</h3>
       <span class="zone">${p.zone}, ${p.city}</span>
-      <span class="bottom"><span class="price num">${priceFor(p, op)}</span><span class="code num">Cód. ${p.code}</span></span>
+      <span class="bottom"><span class="price num">${priceView(p, op)}</span><span class="code num">Cód. ${p.code}</span></span>
     </div>
   </button>`;
 }
 
+// 2. Propiedades destacadas (diseño 6). En producción: casilla "destacada" en el panel, máximo 6, con orden manual.
+let FEATURED = [['8407206','venta'],['9755783','alquiler'],['2575330','venta'],['9003242','alquiler'],['7120619','venta'],['4571399','venta']];
+function d6card(p, op) {
+  const meta = [op === 'venta' ? 'Venta' : 'Alquiler', sizeOf(p) && m2(sizeOf(p)), p.bd && p.bd + ' habitaciones'].filter(Boolean).join(' · ');
+  return `<button class="d6-card" data-code="${p.code}" data-op="${op}"><div class="ph-wrap">${photo(p)}</div><b>${esc(p.type)} en ${esc(p.zone)}</b><span class="d6-meta num">${meta}</span><span class="pp num">${priceView(p, op)}</span><span class="det">Detalles</span></button>`;
+}
+const STARS = [[37,7],[41,30],[52,6],[58,36],[66,4],[78,8],[93,30],[96,6],[44,14],[71,33],[86,40],[31,24]];
 function rail(op) {
   const pick = {venta:['8407206','2575375','7120619','9805872','2575330','3773558','7388468','2575123','9422238','4571399'], alquiler:['9755783','6776622','9028674','9003242','7465203','9304389','6761253','7465589']}[op];
   const items = pick.map(byCode).filter(p => p && isPublic(p) && p.op.includes(op));
   const it = (p, dup) => `<button class="show-item" data-code="${p.code}" data-op="${op}" ${dup ? 'aria-hidden="true" tabindex="-1"' : ''}>
       <div class="ph-wrap">${photo(p,0,'Foto pendiente')}${p.status === 'reservado' ? '<span class="badge">Reservado</span>' : ''}</div>
       <span class="show-cap"><span class="show-name">${esc(p.type)} en ${esc(p.zone)}</span>
-      <span class="ri-meta"><span>${sizeOf(p) ? m2(sizeOf(p)) + ' · ' : ''}Cód. ${p.code}</span><span class="ri-price num">${priceFor(p, op)}</span></span></span>
+      <span class="ri-meta"><span>${sizeOf(p) ? m2(sizeOf(p)) + ' · ' : ''}Cód. ${p.code}</span><span class="ri-price num">${priceView(p, op)}</span></span></span>
     </button>`;
   return `<section class="rail-sec" aria-labelledby="rl-${op}">
     <div class="wrap rail-head">
@@ -954,7 +1182,13 @@ function rail(op) {
 function home() {
   return `
   <div class="mast"><div class="wrap">
-    <h1 class="mast-logo ${introPlayed ? '' : 'play'}"><span class="sr">San-Bri Bienes Raíces</span>
+    <section class="avila" aria-label="San Bri Bienes Raíces, con el Ávila de fondo">
+    <div class="av-stars" aria-hidden="true">${STARS.map(([x, y]) => `<i style="left:${x}%;top:${y}%"></i>`).join('')}</div>
+    <svg class="av-astro av-sun" viewBox="-60 -60 120 120" aria-hidden="true"><g stroke="#9F949A" stroke-width="2.4" stroke-linecap="round">${Array.from({length:16}, (_, i) => { const a = i * Math.PI / 8, r1 = 34, r2 = i % 2 ? 44 : 52; return `<line x1="${(Math.cos(a)*r1).toFixed(1)}" y1="${(Math.sin(a)*r1).toFixed(1)}" x2="${(Math.cos(a)*r2).toFixed(1)}" y2="${(Math.sin(a)*r2).toFixed(1)}"/>`; }).join('')}</g><circle r="27" fill="#F2EFF0" stroke="#513F45" stroke-width="2.2"/><circle r="20" fill="none" stroke="#9F949A" stroke-width="1" stroke-dasharray="2 3"/></svg>
+    <svg class="av-astro av-moon" viewBox="-60 -60 120 120" aria-hidden="true"><circle r="46" fill="#DCE5F0" opacity=".12"/><circle r="30" fill="#E9EEF5"/><circle cx="-9" cy="-6" r="6" fill="#C9D3E0" opacity=".7"/><circle cx="10" cy="9" r="4" fill="#C9D3E0" opacity=".6"/><circle cx="6" cy="-14" r="2.6" fill="#C9D3E0" opacity=".6"/></svg>
+    <img class="av-mtn av-day" src="img/avila-dia.webp" alt="" width="1342" height="718" fetchpriority="high">
+    <img class="av-mtn av-night" src="img/avila-noche.webp" alt="" width="1342" height="718">
+    <h1 class="mast-logo ${introPlayed ? '' : 'play'}"><span class="sr">San Bri Bienes Raíces</span>
       <svg viewBox="80 170 800 520" aria-hidden="true">
         <g class="lg-house"><path class="lg-roof" d="M372 498 L440 442 L508 498 L488 498 L440 459 L392 498Z" fill="var(--roof)"/>
           <rect class="lg-frame" x="410" y="512" width="50" height="76" rx="11" fill="none" stroke="var(--brand-steel)" stroke-width="18"/>
@@ -966,6 +1200,9 @@ function home() {
         <text class="lg-tag" x="420" y="664" font-family="Montserrat,sans-serif" font-weight="500" font-size="64" fill="var(--brand-ink)" letter-spacing="1">bienes raíces</text>
       </svg>
     </h1>
+    <p class="av-phrase">¡Haz con nosotros el negocio de tu vida!</p>
+    <button class="theme-sw " role="switch" aria-checked="false" aria-label="Modo noche" data-theme-sw><span class="knob" aria-hidden="true"></span><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+    </section>
     <div class="mast-row">
       <p class="mast-line">Bienes raíces en Caracas desde hace más de 30 años.</p>
       <div class="mast-actions"><button class="btn" data-go="venta">Comprar</button><button class="btn ghost" data-go="alquiler">Alquilar</button></div>
@@ -977,11 +1214,16 @@ function home() {
     </form>
   </div></div>
 
+  <section class="d6-sec" aria-labelledby="d6-h"><div class="wrap">
+    <h2 id="d6-h">Propiedades destacadas</h2><p class="sub">Ventas y alquileres</p>
+    <div class="d6-grid">${FEATURED.map(([c, op]) => d6card(byCode(c), op)).join('')}</div>
+  </div></section>
+
   <section class="feature" aria-labelledby="ft-h">
     <button class="feature-ph" data-code="2575332" data-op="venta" aria-label="Ver la casa de la portada"><img src="img/hero.jpg" alt="Casa con piscina y vista al Ávila al atardecer" fetchpriority="high"></button>
     <div class="wrap">
-      <h2 id="ft-h">Haz con San‑Bri el negocio <em>de tu vida</em></h2>
-      <p>Casas, apartamentos, oficinas y terrenos en venta y alquiler, con un asesor que conoce cada zona.</p>
+      <h2 id="ft-h">Un asesor que conoce <em>cada zona</em></h2>
+      <p>Casas, apartamentos, oficinas y terrenos en venta y alquiler en Caracas y el litoral.</p>
       <div class="mast-actions"><button class="btn" data-go="venta">Ver inmuebles en venta</button><button class="btn ghost" data-go="alquiler">En alquiler</button></div>
     </div>
   </section>
@@ -990,14 +1232,14 @@ function home() {
   ${rail('alquiler')}
 
   <section class="zones-home" aria-labelledby="zh-h"><div class="wrap">
-    <div class="sec-head"><h2 id="zh-h">Conoce las zonas</h2><button class="btn ghost" data-go="zonas">Ver todas las zonas</button></div>
+    <div class="sec-head"><h2 id="zh-h">Presencia de San Bri</h2><button class="btn ghost" data-go="zonas">Ver todos los municipios</button></div>
     <div class="zone-list">${MUNIS.map(zoneTile).join('')}</div>
   </div></section>
 
   <section class="about" aria-labelledby="about-h"><div class="wrap about-grid">
     <h2 id="about-h">Quiénes somos</h2>
     <div class="about-body">
-      <p class="about-lead">San-Bri es una inmobiliaria de Caracas. Desde hace más de 30 años vendemos y alquilamos casas, apartamentos, oficinas y locales, desde El Hatillo hasta el litoral.</p>
+      <p class="about-lead">San Bri es una inmobiliaria de Caracas. Desde hace más de 30 años vendemos y alquilamos casas, apartamentos, oficinas y locales, desde El Hatillo hasta el litoral.</p>
       <p class="muted">Cada inmueble lo atiende un asesor que conoce la zona, visita la propiedad y acompaña al cliente hasta la firma.</p>
       <p><span class="sample">Texto provisional: lo completa el cliente</span></p>
       <dl class="stats num">
@@ -1006,7 +1248,7 @@ function home() {
         <div><dt>Asesores</dt><dd>${AGENTS.length}</dd></div>
       </dl>
       <div class="agents">${AGENTS.map(agentCard).join('')}</div>
-      <button class="btn light" data-go="nosotros" style="justify-self:start">Conoce más sobre San-Bri</button>
+      <button class="btn light" data-go="nosotros" style="justify-self:start">Conoce más sobre San Bri</button>
     </div>
   </div></section>
 
@@ -1030,7 +1272,7 @@ function home() {
         <div class="two"><label for="ct-name">Nombre<input id="ct-name" type="text" required autocomplete="given-name"></label><label for="ct-last">Apellido<input id="ct-last" type="text" required autocomplete="family-name"></label></div>
         <div class="two"><label for="ct-email">Correo<input id="ct-email" type="email" required autocomplete="email"></label><label for="ct-phone">Teléfono (opcional)<input id="ct-phone" type="tel" autocomplete="tel" placeholder="+58 414 000 0000"></label></div>
         <label for="ct-msg">Mensaje<textarea id="ct-msg" rows="4" placeholder="¿Qué buscas o qué quieres vender?"></textarea></label>
-        <label class="consent" for="ct-ok"><input id="ct-ok" type="checkbox" required><span>Acepto que San-Bri me contacte sobre mi consulta y acepto la Política de privacidad.</span></label>
+        <label class="consent" for="ct-ok"><input id="ct-ok" type="checkbox" required><span>Acepto que San Bri me contacte sobre mi consulta y acepto la Política de privacidad.</span></label>
         <button class="btn" type="submit" style="justify-self:start">Enviar</button>
       </div>
       <div class="thanks" id="ct-done" hidden><h3>Mensaje recibido</h3><p>Un asesor te escribirá pronto. En esta vista previa no se envía nada.</p></div>
@@ -1089,11 +1331,11 @@ function prop() {
         <p class="disclaimer">Precio y disponibilidad sujetos a confirmación.</p>
       </div>
       <div class="side-col"><aside class="aside">
-        <span class="big num">${priceFor(p, op)}</span>
-        ${other ? `<span class="alt muted num">${other}</span>` : ''}
+        ${user ? `<span class="big num">${priceFor(p, op)}</span>
+        ${other ? `<span class="alt muted num">${other}</span>` : ''}` : `<span class="price-lock"><span class="blur" aria-hidden="true">${PH(op)}</span><span class="lock-txt">Inicia sesión para ver el precio</span></span><button class="btn ghost" data-login-price>Iniciar sesión</button>`}
         <span class="code num" style="font-size:15px">Código ${p.code}</span>
         <button class="btn" id="ask-call">Solicitar llamada</button>
-        <a class="btn ghost" href="https://wa.me/${WA}?text=${encodeURIComponent('Hola, me interesa el inmueble ' + p.code)}" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        <a class="btn ghost" data-wa href="https://wa.me/${WA}?text=${encodeURIComponent(waText(p.code))}" target="_blank" rel="noopener">Escribir por WhatsApp</a>
         <button class="btn ghost" id="share">Compartir</button>
         <p class="copyline muted num">O llama al +58 414 135 6110</p>
       </aside>
@@ -1110,7 +1352,7 @@ function meter(sc) {
     <p class="meter-note">${note}</p></div>`;
 }
 function zonas() {
-  return `<div class="wrap"><div class="page-head"><h1>Zonas</h1><p class="muted" style="margin-top:12px;max-width:56ch">Cómo es vivir en cada municipio donde tenemos inmuebles: transporte, colegios, clubes, comercio y recreación.</p></div>
+  return `<div class="wrap"><div class="page-head"><h1>Presencia de San Bri</h1><p class="muted" style="margin-top:12px;max-width:56ch">Los municipios donde tenemos inmuebles y cómo es vivir en cada uno: transporte, colegios, clubes, comercio y recreación.</p></div>
     <div class="zone-list">${MUNIS.map(zoneTile).join('')}</div></div>`;
 }
 function zoneTile(m) {
@@ -1124,11 +1366,11 @@ function priceTable(items) {
     items.filter(p => p.op.includes(op) && (op === 'venta' ? p.sale : p.rent)).forEach(p => (by[p.type] = by[p.type] || []).push(op === 'venta' ? p.sale : p.rent));
     Object.entries(by).forEach(([t, v]) => {
       const lo = Math.min(...v), hi = Math.max(...v), u = op === 'alquiler' ? '/mes' : '';
-      rows.push(`<tr><td>${t}</td><td>${op === 'venta' ? 'Venta' : 'Alquiler'}</td><td class="num">${lo === hi ? fmt(lo) + u : fmt(lo) + ' – ' + fmt(hi).replace('US$','') + u}</td><td class="num">${v.length}</td></tr>`);
+      rows.push(`<tr><td>${t}</td><td>${op === 'venta' ? 'Venta' : 'Alquiler'}</td><td class="num">${!user ? PH(op) : lo === hi ? fmt(lo) + u : fmt(lo) + ' – ' + fmt(hi).replace('US$','') + u}</td><td class="num">${v.length}</td></tr>`);
     });
   }
   return `<section class="prices"><div class="sec-head"><h2>Precios en la zona</h2><span class="muted" style="font-size:14px">Calculado con los inmuebles publicados</span></div>
-    <div style="overflow-x:auto"><table><thead><tr><th>Tipo</th><th>Operación</th><th>Rango</th><th>Inmuebles</th></tr></thead><tbody>${rows.join('')}</tbody></table></div></section>`;
+    <div style="overflow-x:auto" class="${user ? '' : 'locked-table'}">${user ? '' : '<div class="lock-over"><p class="muted">Inicia sesión para ver los precios de la zona.</p><button class="btn ghost" data-login-price>Iniciar sesión</button></div>'}<table ${user ? '' : 'aria-hidden="true"'}><thead><tr><th>Tipo</th><th>Operación</th><th>Rango</th><th>Inmuebles</th></tr></thead><tbody>${rows.join('')}</tbody></table></div></section>`;
 }
 const DD_IC = {
   'Colegios':'<path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.5V16c0 1.4 2.2 3 5 3s5-1.6 5-3v-4.5"/>',
@@ -1147,7 +1389,7 @@ function zona() {
   const items = P.filter(p => p.muni === m.id && isPublic(p));
   const tags = m.scores.filter(s => s[1] >= 4).map(s => `<span class="dd-tag" style="color:${DD_COL[s[0]] || '#1A3351'}">${s[0]}</span>`).join('');
   return `<div class="wrap">
-    <div class="crumb"><button data-go="zonas">Zonas</button> <span class="muted">/ ${m.name}</span></div>
+    <div class="crumb"><button data-go="zonas">Presencia de San Bri</button> <span class="muted">/ ${m.name}</span></div>
     <section class="dd" aria-labelledby="dd-h">
       <div class="dd-head"><h1 id="dd-h">Conoce ${m.name} a fondo</h1>
         <div class="dd-nav"><button data-dd="-1" aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button data-dd="1" aria-label="Siguiente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div></div>
@@ -1173,7 +1415,7 @@ function nosotros() {
   <div class="nos-head"><div class="wrap">
     <div class="crumb" style="padding-top:0"><button data-go="home" style="color:var(--on-deep-muted)">Inicio</button> <span style="color:var(--on-deep-muted)">/ Nosotros</span></div>
     <h1>Más de 30 años abriendo puertas en Caracas</h1>
-    <p class="nos-lead">San-Bri Bienes Raíces vende y alquila casas, apartamentos, oficinas, locales, galpones y terrenos en el este de Caracas y el litoral.</p>
+    <p class="nos-lead">San Bri Bienes Raíces vende y alquila casas, apartamentos, oficinas, locales, galpones y terrenos en el este de Caracas y el litoral.</p>
     <p><span class="sample">Historia provisional: el cliente escribe la real</span></p>
   </div></div>
 
@@ -1181,7 +1423,7 @@ function nosotros() {
     <section class="nos-sec">
       <h2>Nuestra historia</h2>
       <div class="nos-text">
-        <p>Aquí va cómo empezó San-Bri: quién la fundó, en qué año y por qué. Un párrafo corto, contado en primera persona por la familia o el fundador.</p>
+        <p>Aquí va cómo empezó San Bri: quién la fundó, en qué año y por qué. Un párrafo corto, contado en primera persona por la familia o el fundador.</p>
         <p class="muted">Pendiente del cliente: año de fundación, fundador, primera oficina, hitos importantes.</p>
       </div>
     </section>
@@ -1202,7 +1444,7 @@ function nosotros() {
     </section>
 
     <section class="nos-sec">
-      <h2>Dónde trabajamos</h2>
+      <h2>Presencia de San Bri</h2>
       <div class="zone-list">${MUNIS.map(zoneTile).join('')}</div>
     </section>
 
@@ -1221,7 +1463,7 @@ function vender() {
   const zones = [...new Set(P.filter(p => isPublic(p)).map(p => p.zone))].sort();
   return `<div class="wrap"><div class="sell-grid">
     <div>
-      <h1>Vende tu inmueble con San-Bri</h1>
+      <h1>Vende tu inmueble con San Bri</h1>
       <p class="muted" style="margin-top:16px;max-width:42ch">Déjanos los datos básicos. No tiene costo ni compromiso.</p>
       <ol class="steps">
         <li><span>Un asesor te llama para conocer el inmueble.</span></li>
@@ -1246,7 +1488,7 @@ function vender() {
         <label for="s-desc">Descripción breve<textarea id="s-desc" rows="4" placeholder="Habitaciones, estado, si está ocupado…"></textarea></label>
         <label for="s-photos">Fotos <span class="hint">Hasta 10. Puedes enviarlas después por WhatsApp.</span><input id="s-photos" type="file" accept="image/*" multiple></label>
         <p class="hint" id="s-photos-msg" aria-live="polite"></p>
-        <label class="consent" for="s-ok"><input id="s-ok" type="checkbox" required><span>Acepto que San-Bri me contacte por teléfono o WhatsApp sobre mi consulta y acepto la Política de privacidad.</span></label>
+        <label class="consent" for="s-ok"><input id="s-ok" type="checkbox" required><span>Acepto que San Bri me contacte por teléfono o WhatsApp sobre mi consulta y acepto la Política de privacidad.</span></label>
         <button class="btn" type="submit" style="justify-self:start">Enviar datos</button>
       </div>
       <div class="thanks" id="sell-done" hidden><h2>Datos recibidos</h2><p>Un asesor te llamará en las próximas horas hábiles. En esta vista previa no se guarda ni se envía nada.</p></div>
@@ -1254,7 +1496,7 @@ function vender() {
   </div></div>`;
 }
 
-function legal() {
+function legalOld() {
   return `<div class="wrap" style="padding-top:48px;max-width:760px">
     <h1>Política de privacidad y términos</h1>
     <p class="muted" style="margin-top:16px">Borrador pendiente. Se redacta siguiendo la sección 10 de la guía y lo revisa el abogado del cliente antes del lanzamiento.</p>
@@ -1263,13 +1505,17 @@ function legal() {
 
 function render() {
   const v = state.view;
-  const html = v === 'home' ? home() : v === 'list' ? list() : v === 'prop' ? prop() : v === 'vender' ? vender() : v === 'zonas' ? zonas() : v === 'nosotros' ? nosotros() : v === 'zona' ? zona() : v === 'admin' ? admin() : legal();
+  const html = v === 'home' ? home() : v === 'list' ? list() : v === 'prop' ? prop() : v === 'vender' ? vender() : v === 'zonas' ? zonas() : v === 'nosotros' ? nosotros() : v === 'zona' ? zona() : v === 'admin' ? admin() : v === 'cuenta' ? cuenta() : legal();
   app.innerHTML = html;
   renderAcct();
   reveal(app);
   if (typeof wireRails === 'function' && rvOn) wireRails();
   if (v === 'home') introPlayed = true;
-  document.title = 'San-Bri Inmobiliaria';
+  document.body.dataset.view = v;
+  app.classList.toggle('reveal-price', revealNext); revealNext = false;
+  syncThemeSwitches();
+  const sec = {list: state.op === 'venta' ? 'Comprar' : 'Alquilar', prop: state.code && title(byCode(state.code) || {type:'', zone:''}), zonas: 'Presencia de San Bri', zona: 'Presencia de San Bri: ' + (MUNIS.find(m => m.id === state.muni)?.name || ''), nosotros: 'Nosotros', vender: 'Vender', admin: 'Panel del equipo', cuenta: 'Mi cuenta', legal: LEGAL_T[state.doc]}[v];
+  document.title = sec ? `${sec} · San Bri Inmobiliaria` : 'San Bri Inmobiliaria';
 }
 
 // Navigation
@@ -1288,7 +1534,7 @@ document.addEventListener('click', e => {
   if (zt) { go('zona', {muni:zt.dataset.muni}); return; }
   if (e.target.closest('[data-more]')) { state.limit += 24; const y = scrollY; render(); scrollTo(0, y); return; }
   if (e.target.closest('[data-gal]')) { openGallery(); return; }
-  const sh = e.target.closest('.show-item, .feature-ph');
+  const sh = e.target.closest('.show-item, .feature-ph, .d6-card');
   if (sh) { go('prop', {code:sh.dataset.code, op:sh.dataset.op}); return; }
   const rb = e.target.closest('[data-rail]');
   if (rb) { const t = rb.closest('.rail-sec').querySelector('.rail'), step = t.querySelector('.show-item').offsetWidth + 24; t._hold = performance.now() + 2500; t.scrollBy({left: +rb.dataset.rail * step, behavior: rvOn ? 'smooth' : 'auto'}); return; }
@@ -1330,7 +1576,7 @@ function toast(msg) {
 }
 async function share() {
   const p = P.find(x => x.code === state.code);
-  const text = `${title(p)} · ${priceFor(p, state.op)} · Código ${p.code} · san-bri.com`;
+  const text = `${title(p)}${user ? ' · ' + priceFor(p, state.op) : ''} · Código ${p.code} · san-bri.com`;
   try { await navigator.clipboard.writeText(text); toast('Enlace copiado'); }
   catch { toast(text); }
 }
@@ -1351,10 +1597,18 @@ document.getElementById('call-form').addEventListener('submit', e => {
   document.getElementById('call-done').hidden = false;
 });
 
-function setWhatsApp(code) {
-  const t = code ? 'Hola, me interesa el inmueble ' + code : 'Hola, quisiera información sobre un inmueble';
-  document.getElementById('mbar-wa').href = `https://wa.me/${WA}?text=${encodeURIComponent(t)}`;
+// 4. El logo flotante y la barra del teléfono abren WhatsApp con un mensaje según la página.
+// Las respuestas automáticas se configuran en la app WhatsApp Business del número de la oficina.
+function waText(code) {
+  const p = code && byCode(code);
+  return p ? `Hola, me interesa el inmueble ${p.code} (${title(p)})` : 'Hola, vengo de la página web de San Bri';
 }
+function setWhatsApp(code) {
+  const href = `https://wa.me/${WA}?text=${encodeURIComponent(waText(code))}`;
+  document.getElementById('mbar-wa').href = href;
+  document.getElementById('wa-logo').href = href;
+}
+document.addEventListener('click', e => { if (e.target.closest('[data-wa]')) track('whatsapp_click', {code: state.view === 'prop' ? state.code : null}); });
 
 // Guided chat: scripted questions, no AI. Mirrors section 9 of the guide.
 const fab = document.getElementById('chat-fab'), chat = document.getElementById('chat'),
@@ -1395,7 +1649,7 @@ function askName() {
       answers.tel = t; bot('¿Algo más que debamos saber?');
       ask('text', 'Opcional', x => {
         answers.extra = x;
-        foot.innerHTML = '<label class="consent" for="chat-ok"><input id="chat-ok" type="checkbox"><span>Acepto que San-Bri me contacte por teléfono o WhatsApp y acepto la Política de privacidad.</span></label><button class="btn" id="chat-send" disabled>Enviar consulta</button>';
+        foot.innerHTML = '<label class="consent" for="chat-ok"><input id="chat-ok" type="checkbox"><span>Acepto que San Bri me contacte por teléfono o WhatsApp y acepto la Política de privacidad.</span></label><button class="btn" id="chat-send" disabled>Enviar consulta</button>';
         const ok = foot.querySelector('#chat-ok'), send = foot.querySelector('#chat-send');
         ok.onchange = () => send.disabled = !ok.checked;
         send.onclick = () => { foot.innerHTML = ''; bot(`Gracias, ${answers.nombre}. Un asesor te llamará pronto. (Vista previa: no se guarda ni se envía nada.)`); };
@@ -1410,7 +1664,7 @@ document.getElementById('chat-close').onclick = () => { chat.hidden = true; fab.
 // Accounts, likes and comments. Preview only: everything lives in memory and resets on reload.
 // Real version: Supabase Auth (Google + email link), one vote per user per property, comments wait for approval.
 const THUMB = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v11H3V10zM7 10l4-8c1.7 0 2.8 1.3 2.5 3L13 9h6.2c1.3 0 2.2 1.2 1.9 2.4l-1.8 7.4A2.9 2.9 0 0 1 16.5 21H7"/></svg>';
-let user = null, afterLogin = null, adminTab = 'inmuebles', confirmDel = null;
+let user = null, afterLogin = null, adminTab = 'clientes', confirmDel = null, revealNext = false;
 let TEAM = [{email:'admin@ejemplo.com', name:'Administrador (ejemplo)', role:'Dueño'}];
 const REV = {
   '9379092': {up:12, down:1, comments:[{name:'Visitante de ejemplo', text:'Comentario de muestra: así se vería una opinión aprobada.', date:'20 oct 2026', ok:true}]},
@@ -1422,8 +1676,8 @@ const isAdmin = () => !!user && TEAM.some(t => t.email === user.email);
 
 function renderAcct() {
   const b = document.getElementById('acct');
-  b.innerHTML = user ? `<span class="av" aria-hidden="true">${esc(user.name[0].toUpperCase())}</span>${isAdmin() ? 'Panel' : 'Salir'}` : 'Entrar';
-  b.setAttribute('aria-label', user ? (isAdmin() ? 'Abrir panel del equipo' : 'Cerrar sesión de ' + user.name) : 'Entrar');
+  b.innerHTML = user ? `<span class="av" aria-hidden="true">${esc(user.name[0].toUpperCase())}</span>${isAdmin() ? 'Panel' : 'Mi cuenta'}` : 'Entrar';
+  b.setAttribute('aria-label', user ? (isAdmin() ? 'Abrir panel del equipo' : 'Mi cuenta, ' + user.name) : 'Entrar');
 }
 function reviews(p) {
   const r = rev(p.code), mine = myVote[p.code];
@@ -1433,11 +1687,11 @@ function reviews(p) {
     <div class="votes">
       <button class="vote up" data-vote="up" aria-pressed="${mine === 'up'}" aria-label="Me gusta">${THUMB}<span class="num">${r.up}</span></button>
       <button class="vote down" data-vote="down" aria-pressed="${mine === 'down'}" aria-label="No me gusta"><span style="display:inline-flex;transform:rotate(180deg)">${THUMB}</span></button>
-      <span class="muted" style="font-size:14px">${user ? 'Toca de nuevo para quitar tu voto.' : 'Entra con Google o tu correo para votar y comentar.'}</span>
+      <span class="muted" style="font-size:14px">${user ? 'Toca de nuevo para quitar tu voto.' : 'Entra con Apple, Google o tu correo para votar y comentar.'}</span>
     </div>
     ${shown.length ? `<ul class="comments">${shown.map(c => `<li><span class="who">${esc(c.name)}<span class="when">${c.date}</span>${c.ok ? '' : ' <span class="sample">En revisión</span>'}</span><span>${esc(c.text)}</span></li>`).join('')}</ul>` : '<p class="muted">Todavía no hay comentarios.</p>'}
     ${user ? `<form class="form" id="rv-form"><label for="rv-text">Tu comentario<textarea id="rv-text" rows="3" maxlength="500" required placeholder="¿Qué te pareció? ¿Tienes una pregunta para el asesor?"></textarea></label>
-      <p class="hint">Los comentarios se publican cuando el equipo de San-Bri los revisa.</p><button class="btn" type="submit" style="justify-self:start">Publicar comentario</button></form>`
+      <p class="hint">Los comentarios se publican cuando el equipo de San Bri los revisa.</p><button class="btn" type="submit" style="justify-self:start">Publicar comentario</button></form>`
       : `<button class="btn ghost" data-login style="justify-self:start">Entrar para comentar</button>`}
   </section>`;
 }
@@ -1451,36 +1705,29 @@ function vote(kind, btn) {
 }
 const loginDlg = document.getElementById('login-dlg');
 function openLogin(why, then) {
-  document.getElementById('login-why').textContent = why || 'Para dar me gusta y comentar.';
-  afterLogin = then || null; loginDlg.showModal();
-}
-function signIn(email, name) {
-  user = {email: email.toLowerCase(), name: name || email.split('@')[0]};
-  loginDlg.close(); toast('Hola, ' + user.name);
-  const t = afterLogin; afterLogin = null; render(); if (t) t();
+  document.getElementById('login-why').textContent = why || 'Para ver precios, dar me gusta y comentar.';
+  afterLogin = then || null; loginStep('start'); loginDlg.showModal();
 }
 document.getElementById('login-x').onclick = () => loginDlg.close();
-document.getElementById('login-google').onclick = () => signIn('visitante@gmail.com', 'Visitante');
-document.getElementById('login-form').addEventListener('submit', e => { e.preventDefault(); signIn(document.getElementById('l-email').value.trim()); });
 document.getElementById('acct').onclick = () => {
   if (!user) return openLogin();
-  if (isAdmin()) return go('admin');
-  user = null; toast('Sesión cerrada'); render();
+  go(isAdmin() ? 'admin' : 'cuenta');
 };
 
 // Team panel: only emails on the TEAM list get in; only the owner adds or removes people.
 function admin() {
   if (!isAdmin()) return `<div class="wrap" style="padding-block:64px;max-width:640px;display:grid;gap:16px">
     <h1>Acceso para el equipo</h1>
-    <p class="muted">Esta sección es solo para personas autorizadas por San-Bri. ${user ? `La cuenta ${esc(user.email)} no tiene acceso.` : ''}</p>
+    <p class="muted">Esta sección es solo para personas autorizadas por San Bri. ${user ? `La cuenta ${esc(user.email)} no tiene acceso.` : ''}</p>
     <button class="btn" data-login-admin style="justify-self:start">${user ? 'Entrar con otra cuenta' : 'Entrar'}</button></div>`;
   const pending = Object.entries(REV).flatMap(([code, r]) => r.comments.filter(c => !c.ok).map(c => ({code, c})));
-  const tabs = [['inmuebles','Inmuebles'],['nuevo','Agregar inmueble'],['comentarios',`Comentarios (${pending.length})`],['equipo','Accesos']];
+  const tabs = [['clientes','Clientes'],['graficas','Gráficas'],['inmuebles','Inmuebles'],['nuevo','Agregar inmueble'],['comentarios',`Comentarios (${pending.length})`],['correo','Correo de bienvenida'],['eventos',`Eventos (${EVENTS.length})`],['equipo','Accesos']];
   let body = '';
   if (adminTab === 'inmuebles') body = `<p class="admin-note">Cambia el estado cuando un inmueble se reserva, se vende o se alquila. Vendido, Alquilado y Oculto lo sacan de la página al instante, sin borrarlo.</p>
-    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Código</th><th>Inmueble</th><th>Precio</th><th>Estado</th><th></th></tr></thead><tbody>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Código</th><th>Inmueble</th><th>Precio</th><th>Estado</th><th>Destacada</th><th></th></tr></thead><tbody>
     ${P.map(p => `<tr><td class="num">${p.code}</td><td>${esc(title(p))}</td><td class="num">${p.op.map(o => priceFor(p, o)).join('<br>')}</td>
       <td><select data-status="${p.code}" aria-label="Estado de ${p.code}">${['disponible','reservado','vendido','alquilado','oculto'].map(st => `<option value="${st}" ${p.status === st ? 'selected' : ''}>${st[0].toUpperCase() + st.slice(1)}</option>`).join('')}</select></td>
+      <td><input type="checkbox" data-feat="${p.code}" ${FEATURED.some(f => f[0] === p.code) ? 'checked' : ''} aria-label="Destacar ${p.code} en el inicio"></td>
       <td>${confirmDel === p.code ? `<button class="btn danger" data-del="${p.code}">Confirmar</button> <button class="btn ghost" data-del-cancel>No</button>` : `<button class="btn ghost" data-del-ask="${p.code}">Eliminar</button>`}</td></tr>`).join('')}
     </tbody></table></div>`;
   if (adminTab === 'nuevo') body = `<form class="form" id="new-form" style="max-width:760px">
@@ -1497,7 +1744,11 @@ function admin() {
     <button class="btn" type="submit" style="justify-self:start">Publicar inmueble</button></form>`;
   if (adminTab === 'comentarios') body = pending.length ? `<ul class="comments">${pending.map(({code, c}) => `<li><span class="who">${esc(c.name)} · inmueble ${code}<span class="when">${c.date}</span></span><span>${esc(c.text)}</span>
     <span style="display:flex;gap:8px;margin-top:6px"><button class="btn" data-approve="${code}|${c.id}">Aprobar</button><button class="btn ghost" data-reject="${code}|${c.id}">Borrar</button></span></li>`).join('')}</ul>` : '<p class="muted">No hay comentarios por revisar.</p>';
-  if (adminTab === 'equipo') body = `<p class="admin-note">Solo estas personas pueden entrar al panel. Para dar acceso a alguien, agrega su correo; al entrar con Google con ese correo ya tendrá permiso.</p>
+  if (adminTab === 'clientes') body = state.client ? clientFicha(CLIENTS.find(c => c.id === state.client)) : clientsTable();
+  if (adminTab === 'graficas') body = chartsTab();
+  if (adminTab === 'correo') body = mailTab();
+  if (adminTab === 'eventos') body = eventsTab();
+  if (adminTab === 'equipo') body = `<p class="admin-note">Solo por invitación: agrega el correo de la persona y le llega una invitación. Para entrar usa su correo y la verificación en dos pasos (código de una app de autenticación).</p>
     <div class="tbl-wrap"><table class="tbl" style="min-width:520px"><thead><tr><th>Correo</th><th>Rol</th><th></th></tr></thead><tbody>
     ${TEAM.map(t => `<tr><td>${esc(t.email)}</td><td>${t.role}</td><td>${t.role === 'Dueño' ? '' : `<button class="btn ghost" data-unteam="${esc(t.email)}">Quitar acceso</button>`}</td></tr>`).join('')}</tbody></table></div>
     <form class="form" id="team-form" style="max-width:520px;margin-top:24px"><div class="two"><label for="t-email">Correo<input id="t-email" type="email" required placeholder="asesor@correo.com"></label>
@@ -1505,7 +1756,8 @@ function admin() {
       <button class="btn" type="submit" style="justify-self:start">Dar acceso</button></form>`;
   return `<div class="wrap"><div class="page-head" style="display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap">
     <div><h1>Panel del equipo</h1><p class="muted" style="margin-top:8px">${esc(user.email)} · vista previa, los cambios se pierden al recargar</p></div>
-    <button class="btn ghost" id="logout">Cerrar sesión</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="analyze">Analizar ahora</button><button class="btn ghost" id="logout">Cerrar sesión</button></div></div>
+    <div class="adm-bar"><span><span class="dot" aria-hidden="true"></span>Última sincronización con Wasi: hace 12 min <span class="sample">ejemplo</span></span><span>Análisis con Gemini: ${lastAnalysis} <span class="sample">ejemplo</span></span><span>Hoja de Google Sheets: <span class="por">[POR CONFIRMAR: cuenta de Google]</span></span></div>
     <nav class="admin-tabs" aria-label="Secciones del panel">${tabs.map(([id, n]) => `<button data-atab="${id}" ${adminTab === id ? 'aria-current="page"' : ''}>${n}</button>`).join('')}</nav>
     ${body}<div style="height:64px"></div></div>`;
 }
@@ -1515,8 +1767,8 @@ document.addEventListener('click', e => {
   const v = t.closest('[data-vote]');
   if (v) { const k = v.dataset.vote; if (!user) openLogin('Para dar me gusta y comentar.', () => vote(k)); else vote(k); return; }
   if (t.closest('[data-login]')) { openLogin('Para dar me gusta y comentar.'); return; }
-  if (t.closest('[data-login-admin]')) { user = null; openLogin('Solo para personas autorizadas por San-Bri.', () => go('admin')); return; }
-  const at = t.closest('[data-atab]'); if (at) { adminTab = at.dataset.atab; confirmDel = null; render(); return; }
+  if (t.closest('[data-login-admin]')) { user = null; openLogin('Solo para personas autorizadas por San Bri.', () => go('admin')); return; }
+  const at = t.closest('[data-atab]'); if (at) { adminTab = at.dataset.atab; confirmDel = null; state.client = null; render(); return; }
   if (t.id === 'logout') { user = null; go('home'); toast('Sesión cerrada'); return; }
   const da = t.closest('[data-del-ask]'); if (da) { confirmDel = da.dataset.delAsk; render(); return; }
   if (t.closest('[data-del-cancel]')) { confirmDel = null; render(); return; }
@@ -1529,6 +1781,13 @@ document.addEventListener('click', e => {
 app.addEventListener('change', e => {
   const st = e.target.dataset.status;
   if (st) { P.find(p => p.code === st).status = e.target.value; toast(`Inmueble ${st}: ${e.target.value}`); }
+  const fe = e.target.dataset.feat;
+  if (fe) {
+    if (e.target.checked && FEATURED.length >= 6) { e.target.checked = false; toast('Máximo 6 destacadas: quita una primero'); return; }
+    const p = byCode(fe);
+    FEATURED = e.target.checked ? [...FEATURED, [fe, p.op[0]]] : FEATURED.filter(f => f[0] !== fe);
+    toast(e.target.checked ? `Inmueble ${fe} destacado` : `Inmueble ${fe} ya no está destacado`);
+  }
 });
 app.addEventListener('submit', e => {
   const id = e.target.id;
@@ -1559,14 +1818,14 @@ app.addEventListener('submit', e => {
 });
 
 // Scroll reveal. Items in the same row arrive one after another (80 ms apart, at most 5 steps).
-const RV_ONE = '.feature-ph,.dd,.sec-head,.page-head,.zone-head,.nos-head,.about-lead,.zone-top,.prices,.reviews,.band .wrap,.gallery,.prop > div,.side-col,.sell-grid > *,.nos-sec,.empty,.thanks,.results,.filters,footer .wrap > div';
-const RV_ROW = '.show-item,.zone-tile,.card,.agent,.meter,.ways > *,.stats > *,.facts > div,.steps li,.amen > *';
+const RV_ONE = '.feature-ph,.d6-sec h2,.dd,.sec-head,.page-head,.zone-head,.nos-head,.about-lead,.zone-top,.prices,.reviews,.band .wrap,.gallery,.prop > div,.side-col,.sell-grid > *,.nos-sec,.empty,.thanks,.results,.filters,footer .wrap > div';
+const RV_ROW = '.show-item,.d6-card,.zone-tile,.card,.agent,.meter,.ways > *,.stats > *,.facts > div,.steps li,.amen > *';
 const rvOn = !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window;
 const rvObs = rvOn && new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rvObs.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px', threshold:.08});
 if (rvOn) document.documentElement.classList.add('rv-on');
 let rvKey = '';
 function reveal(root) {
-  if (!rvOn || state.view === 'admin') return;
+  if (!rvOn || state.view === 'admin' || state.view === 'cuenta' || state.view === 'legal') return;
   if (root === app) { const k = [state.view, state.code, state.muni, state.op].join('|'); if (k === rvKey) return; rvKey = k; }
   root.querySelectorAll(RV_ONE).forEach(el => { el.classList.add('rv'); rvObs.observe(el); });
   root.querySelectorAll(RV_ROW).forEach(el => {
@@ -1615,6 +1874,404 @@ function openGallery() {
   d.showModal();
 }
 document.getElementById('gal-x').onclick = () => document.getElementById('gal-dlg').close();
+
+// ---------- 1. Modo día / noche. La primera visita abre en día; la elección queda guardada. ----------
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function syncThemeSwitches() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  document.querySelectorAll('[data-theme-sw]').forEach(b => b.setAttribute('aria-checked', dark));
+}
+let themeT;
+function setTheme(dark) {
+  const r = document.documentElement;
+  clearTimeout(themeT);
+  r.classList.add('theme-anim');
+  r.dataset.theme = dark ? 'dark' : 'light';
+  try { localStorage.setItem('sb-theme', dark ? 'dark' : 'light'); } catch {}
+  syncThemeSwitches();
+  themeT = setTimeout(() => r.classList.remove('theme-anim'), reduceMotion ? 400 : 1700);
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-theme-sw]'); if (b) setTheme(b.getAttribute('aria-checked') !== 'true'); });
+
+// ---------- shared helpers ----------
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-close]'); if (c) { c.closest('dialog').close(); return; }
+  const lg = e.target.closest('[data-legal]'); if (lg) { go('legal', {doc: lg.dataset.legal}); return; }
+  if (e.target.closest('[data-login-price]')) { openLogin('Para ver el precio de los inmuebles.'); return; }
+});
+const fmtDur = s => s >= 3600 ? `${Math.floor(s / 3600)} h ${String(Math.round(s % 3600 / 60)).padStart(2, '0')} min` : s >= 60 ? `${Math.round(s / 60)} min` : `${s} s`;
+const fmtDate = d => d.toLocaleDateString('es-VE', {day:'numeric', month:'short'});
+const fmtTime = d => d.toLocaleTimeString('es-VE', {hour:'2-digit', minute:'2-digit'});
+const porc = s => esc(s).replace(/\[POR CONFIRMAR[^\]]*\]/g, m => `<span class="por">${m}</span>`);
+
+// ---------- 8. Cookies: nada que no sea necesario se activa antes del consentimiento ----------
+const CK_VERSION = '2026-10-28';
+let CK = null;
+try { CK = JSON.parse(localStorage.getItem('sb-cookies')); } catch {}
+const ckBar = document.getElementById('ck'), ckDlg = document.getElementById('ck-dlg');
+if (!CK) ckBar.hidden = false;
+function saveCookies(analisis, personalizacion) {
+  const was = CK?.analisis;
+  CK = {necesarias: true, analisis, personalizacion, fecha: new Date().toISOString(), version: CK_VERSION};
+  try { localStorage.setItem('sb-cookies', JSON.stringify(CK)); } catch {}
+  ckBar.hidden = true;
+  if (ckDlg.open) ckDlg.close();
+  toast(analisis ? 'Preferencias guardadas' : 'Solo usamos las cookies necesarias');
+  if (analisis && !was) trackView();
+  if (state.view === 'admin' || state.view === 'cuenta') render();
+}
+function openCookies() {
+  document.getElementById('ck-ana').checked = !!CK?.analisis;
+  document.getElementById('ck-per').checked = !!CK?.personalizacion;
+  ckDlg.showModal();
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-ck]');
+  if (b) {
+    const k = b.dataset.ck;
+    if (k === 'all') saveCookies(true, true);
+    else if (k === 'none') saveCookies(false, false);
+    else if (k === 'config') openCookies();
+    else if (k === 'save') { e.preventDefault(); saveCookies(document.getElementById('ck-ana').checked, document.getElementById('ck-per').checked); }
+    return;
+  }
+  if (e.target.closest('#ck-open,[data-ck-open]')) openCookies();
+});
+
+// ---------- 8. Seguimiento propio. En producción va a la tabla events de Supabase; aquí queda en memoria. ----------
+const anonId = 'anon-' + Math.random().toString(36).slice(2, 10);
+const EVENTS = [], CONSENTS = [];
+const device = matchMedia('(max-width:720px)').matches ? 'teléfono' : 'computadora';
+let curEv = null, visStart = null;
+function route() {
+  const v = state.view;
+  return v === 'home' ? '/' : v === 'list' ? (state.op === 'venta' ? '/comprar' : '/alquilar') : v === 'prop' ? '/inmueble/' + state.code
+    : v === 'zonas' ? '/presencia' : v === 'zona' ? '/presencia/' + state.muni : v === 'legal' ? '/legal/' + (state.doc || 'privacidad') : '/' + v;
+}
+function track(tipo, d = {}) {
+  if (!CK?.analisis) return null;
+  const p = d.code && byCode(d.code), m = p ? muniOf(p) : d.muni && MUNIS.find(x => x.id === d.muni);
+  const ev = {fecha: new Date().toISOString(), tipo, user_id: user?.consent ? user.id : null, anon_id: anonId, codigo: d.code || null,
+    zona: p?.zone || null, municipio: m?.name || null, ruta: route(), segundos_visibles: 0, dispositivo: device, ...(d.extra || {})};
+  EVENTS.push(ev);
+  return ev;
+}
+function flushTime() {
+  if (curEv && visStart != null) { const now = performance.now(); curEv._ms = (curEv._ms || 0) + now - visStart; curEv.segundos_visibles = Math.round(curEv._ms / 1000); visStart = now; }
+}
+function trackView() {
+  flushTime(); curEv = null;
+  const v = state.view;
+  if (v === 'admin') return;
+  curEv = track(v === 'prop' ? 'property_view' : v === 'zona' ? 'zone_view' : 'page_view', {code: v === 'prop' ? state.code : null, muni: v === 'zona' ? state.muni : null});
+  visStart = document.visibilityState === 'visible' ? performance.now() : null;
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') { flushTime(); visStart = null; } else visStart = performance.now(); });
+setInterval(flushTime, 15000); // latido cada 15 s
+app.addEventListener('change', e => { if (e.target.dataset.f) track('filter', {extra: {filtro: e.target.dataset.f, valor: e.target.value}}); });
+app.addEventListener('submit', e => { if (e.target.id === 'code-form') track('search', {extra: {consulta: document.getElementById('code-in')?.value || ''}}); });
+document.addEventListener('click', e => { const v = e.target.closest('[data-vote="up"]'); if (v && user) track('favorite', {code: state.code}); });
+document.getElementById('call-form').addEventListener('submit', () => track('call_request', {code: state.code}));
+
+// ---------- 7. Inicio de sesión: Apple, Google, (Facebook) y correo sin contraseña. El equipo agrega verificación en dos pasos. ----------
+const ICON = {
+  apple:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8s2.3-1.3 3.1-2.5c1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.7-4.1zM13.9 5c.7-.8 1.2-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4z"/></svg>',
+  google:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.2-2 3.4-5 3.4-8.5z"/><path fill="#34A853" d="M12 23.5c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.3 1.1-3.9 1.1-3 0-5.5-2-6.4-4.7H1.8v3A11.5 11.5 0 0 0 12 23.5z"/><path fill="#FBBC05" d="M5.6 14.2a6.9 6.9 0 0 1 0-4.4v-3H1.8a11.5 11.5 0 0 0 0 10.4z"/><path fill="#EA4335" d="M12 5.1c1.7 0 3.2.6 4.4 1.7l3.3-3.3A11.5 11.5 0 0 0 1.8 6.8l3.8 3C6.5 7.1 9 5.1 12 5.1z"/></svg>',
+  facebook:'<svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4h-3V12h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z"/></svg>'};
+const CONSENT_TXT = 'Acepto que San Bri use mi actividad en el sitio (inmuebles y zonas que visito) para recomendarme propiedades y para que un asesor me contacte';
+const CONSENT_VERSION = 'actividad-v1 (2026-10-28)';
+const ACCOUNTS = new Map([['admin@ejemplo.com', {name: 'Administrador (ejemplo)', provider: 'correo', consent: false, created: '2026-10-01'}]]);
+let pend = null, loginAt = 'start';
+const PROV = {apple: 'Apple', google: 'Google', facebook: 'Facebook', correo: 'correo (enlace o código)'};
+function loginStep(step) {
+  loginAt = step;
+  const el = document.getElementById('login-step'), t = document.getElementById('login-title'), why = document.getElementById('login-why');
+  const msg = '<p class="hint" id="l-msg" aria-live="polite"></p>';
+  t.textContent = step === 'new' ? 'Crea tu cuenta' : step === 'totp' ? 'Verificación en dos pasos' : step === 'code' ? 'Revisa tu correo' : 'Entrar a San Bri';
+  why.hidden = step !== 'start';
+  if (step === 'start') el.innerHTML = `
+    <button type="button" class="prov prov-apple" data-prov="apple">${ICON.apple}Continuar con Apple</button>
+    <button type="button" class="prov prov-google" data-prov="google">${ICON.google}Continuar con Google</button>
+    <button type="button" class="prov prov-fb" data-prov="facebook">${ICON.facebook}Continuar con Facebook</button>
+    <p class="or">o con tu correo, sin contraseña</p>
+    <label for="l-email">Correo<input id="l-email" type="email" autocomplete="email" placeholder="tu@correo.com"></label>${msg}
+    <button class="btn" type="submit">Recibir enlace o código</button>
+    <p class="sample" style="margin:0">Vista previa: ningún botón se conecta de verdad. Facebook es opcional. Para probar el panel del equipo usa admin@ejemplo.com.</p>`;
+  if (step === 'code') el.innerHTML = `<p>Te enviamos un enlace y un código de 6 dígitos a <b>${esc(pend.email)}</b>. Abre el enlace en este dispositivo o escribe el código.</p>
+    <label for="l-code">Código<input id="l-code" class="code-in num" inputmode="numeric" autocomplete="one-time-code" maxlength="6"></label>${msg}
+    <button class="btn" type="submit">Entrar</button><button type="button" class="btn ghost" data-login-back>Usar otro método</button>
+    <p class="sample" style="margin:0">Vista previa: cualquier código de 6 dígitos funciona.</p>`;
+  if (step === 'totp') el.innerHTML = `<p>El panel del equipo pide un segundo paso. Escribe el código de 6 dígitos de tu app de autenticación (Google Authenticator, 1Password u otra).</p>
+    <label for="l-totp">Código de la app<input id="l-totp" class="code-in num" inputmode="numeric" autocomplete="one-time-code" maxlength="6"></label>${msg}
+    <button class="btn" type="submit">Verificar y entrar</button>
+    <p class="sample" style="margin:0">Vista previa: cualquier código de 6 dígitos funciona.</p>`;
+  if (step === 'new') el.innerHTML = `<p class="muted" style="font-size:14px">Entraste con ${PROV[pend.provider]}${pend.provider === 'apple' ? '. Apple solo nos da tu nombre esta primera vez; lo guardamos en tu perfil. Si elegiste “Ocultar mi correo”, te escribimos a tu dirección de reenvío de Apple.' : '.'}</p>
+    <label for="l-name">Nombre<input id="l-name" type="text" autocomplete="name" value="${esc(pend.name || '')}"></label>
+    <label class="consent" for="l-track"><input id="l-track" type="checkbox"><span>${CONSENT_TXT}.</span></label>
+    <p class="hint">Es opcional y puedes cambiarlo cuando quieras en Mi cuenta. Al crear tu cuenta aceptas los <button type="button" class="linklike" data-legal="terminos" style="background:none;border:0;padding:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer">Términos de uso</button> y la <button type="button" class="linklike" data-legal="privacidad" style="background:none;border:0;padding:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer">Política de privacidad</button>.</p>${msg}
+    <button class="btn" type="submit">Crear cuenta</button>`;
+  setTimeout(() => document.querySelector('#login-step input:not([type=checkbox]), #login-step button')?.focus(), 30);
+}
+const lMsg = t => { const m = document.getElementById('l-msg'); if (m) m.textContent = t; };
+function afterCredentials() {
+  if (pend.provider === 'correo' && TEAM.some(t => t.email === pend.email) && loginAt !== 'totp') return loginStep('totp');
+  if (ACCOUNTS.has(pend.email) || TEAM.some(t => t.email === pend.email)) return signIn(false);
+  loginStep('new');
+}
+document.getElementById('login-step').addEventListener('click', e => {
+  const p = e.target.closest('[data-prov]');
+  if (p) {
+    const k = p.dataset.prov;
+    pend = {provider: k, name: 'Visitante', email: k === 'apple' ? 'k7q2x9@privaterelay.appleid.com' : k === 'google' ? 'visitante@gmail.com' : 'visitante.facebook@ejemplo.com'};
+    afterCredentials();
+  }
+  if (e.target.closest('[data-login-back]')) loginStep('start');
+});
+document.getElementById('login-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const val = id => (document.getElementById(id)?.value || '').trim();
+  if (loginAt === 'start') {
+    const email = val('l-email').toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return lMsg('Escribe un correo válido, por ejemplo tu@correo.com.');
+    pend = {provider: 'correo', email, name: ''};
+    return loginStep('code');
+  }
+  if (loginAt === 'code') { if (!/^\d{6}$/.test(val('l-code'))) return lMsg('El código tiene 6 dígitos.'); return afterCredentials(); }
+  if (loginAt === 'totp') { if (!/^\d{6}$/.test(val('l-totp'))) return lMsg('El código tiene 6 dígitos.'); return signIn(false); }
+  if (loginAt === 'new') {
+    const name = val('l-name'); if (!name) return lMsg('Escribe tu nombre.');
+    const consent = document.getElementById('l-track').checked;
+    ACCOUNTS.set(pend.email, {name, provider: pend.provider, consent, created: new Date().toISOString().slice(0, 10)});
+    CONSENTS.push({fecha: new Date().toISOString(), email: pend.email, version: CONSENT_VERSION, texto: CONSENT_TXT, eleccion: consent ? 'acepta' : 'no acepta'});
+    pend.name = name;
+    signIn(true);
+  }
+});
+function signIn(isNew) {
+  const a = ACCOUNTS.get(pend.email) || {name: TEAM.find(t => t.email === pend.email)?.name || pend.email.split('@')[0], provider: pend.provider, consent: false};
+  user = {id: 'u-' + [...pend.email].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7).toString(36), email: pend.email, name: a.name, provider: a.provider, consent: a.consent};
+  if (user.consent) EVENTS.forEach(ev => { if (ev.anon_id === anonId && !ev.user_id) ev.user_id = user.id; }); // une la visita anónima con la cuenta
+  loginDlg.close(); toast('Hola, ' + user.name.split(' ')[0]);
+  track('login', {extra: {metodo: pend.provider}});
+  revealNext = true;
+  const t = afterLogin; afterLogin = null; render(); if (t) t();
+  if (isNew) setTimeout(() => showWelcome(user), 600);
+}
+
+// ---------- 6. Correo de bienvenida: una sola vez, al crear la cuenta. Plantilla editable en el panel. ----------
+let MAIL = {asunto: 'Bienvenido a San Bri, {{nombre}}', cuerpo: 'Hola, {{nombre}}:\n\n[POR CONFIRMAR: texto del correo de bienvenida que escribe San Bri]\n\nEquipo San Bri\n+58 414 135 6110'};
+const fill = (s, name) => s.replace(/\{\{\s*nombre\s*\}\}/g, name);
+function mailPreview(to, name) {
+  return `<div class="mail"><div class="mail-h"><span>De: <b>San Bri</b> &lt;hola@san-bri.com&gt; <span class="por">[POR CONFIRMAR: remitente]</span></span><span>Para: ${esc(to)}</span><span>Asunto: <b>${porc(fill(MAIL.asunto, name))}</b></span></div><div class="mail-b">${porc(fill(MAIL.cuerpo, name))}</div></div>`;
+}
+function showWelcome(u) {
+  document.getElementById('mail-body').innerHTML = mailPreview(u.email, u.name.split(' ')[0]);
+  document.getElementById('mail-dlg').showModal();
+}
+
+// ---------- Mi cuenta: consentimiento, descargar mis datos, borrar mi cuenta ----------
+let confirmDelete = false;
+function myData() {
+  return {perfil: {id: user.id, nombre: user.name, correo: user.email, metodo: PROV[user.provider], creado: ACCOUNTS.get(user.email)?.created},
+    consentimientos: CONSENTS.filter(c => c.email === user.email), cookies: CK,
+    eventos: EVENTS.filter(e => e.user_id === user.id).map(({_ms, ...e}) => e)};
+}
+function cuenta() {
+  if (!user) return `<div class="wrap" style="padding-block:64px;max-width:640px;display:grid;gap:16px"><h1>Mi cuenta</h1><p class="muted">Entra para ver tu perfil.</p><button class="btn" data-login style="justify-self:start">Entrar</button></div>`;
+  const n = EVENTS.filter(e => e.user_id === user.id).length;
+  return `<div class="wrap"><div class="page-head"><h1>Mi cuenta</h1><p class="muted" style="margin-top:8px">${esc(user.name)} · ${esc(user.email)} · entraste con ${PROV[user.provider]}</p></div>
+    <div class="acct-grid">
+      <section class="panel"><h2>Tu actividad</h2>
+        <label class="consent" for="acc-track"><input id="acc-track" type="checkbox" ${user.consent ? 'checked' : ''}><span>${CONSENT_TXT}.</span></label>
+        <p class="hint">${user.consent ? `Hay ${n} ${n === 1 ? 'evento ligado' : 'eventos ligados'} a tu cuenta en esta visita.` : 'No ligamos tu actividad a tu cuenta.'} ${CK?.analisis ? '' : 'Además, las cookies de análisis están desactivadas, así que no se registra nada.'}</p>
+        <button class="btn ghost" data-ck-open style="justify-self:start">Cookies</button></section>
+      <section class="panel"><h2>Tus datos</h2>
+        <p class="muted" style="font-size:14px">Puedes pedir una copia de tus datos, corregirlos o borrarlos (habeas data, art. 28 de la Constitución).</p>
+        <button class="btn ghost" id="acc-download" style="justify-self:start">Descargar mis datos</button>
+        ${confirmDelete ? `<p>¿Seguro? Se borran tu cuenta, tus consentimientos y tu actividad. No se puede deshacer.</p><span style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn danger" id="acc-del-yes">Sí, borrar mi cuenta</button><button class="btn ghost" id="acc-del-no">Cancelar</button></span>`
+          : `<button class="btn ghost" id="acc-del" style="justify-self:start">Borrar mi cuenta</button>`}</section>
+    </div>
+    <button class="btn" id="logout" style="margin-top:32px">Cerrar sesión</button></div>`;
+}
+document.addEventListener('click', e => {
+  const id = e.target.closest('button')?.id;
+  if (id === 'acc-download') { document.getElementById('data-body').textContent = JSON.stringify(myData(), null, 2); document.getElementById('data-dlg').showModal(); }
+  if (id === 'acc-del') { confirmDelete = true; render(); document.getElementById('acc-del-yes')?.focus(); }
+  if (id === 'acc-del-no') { confirmDelete = false; render(); }
+  if (id === 'acc-del-yes') {
+    ACCOUNTS.delete(user.email);
+    for (let i = EVENTS.length - 1; i >= 0; i--) if (EVENTS[i].user_id === user.id) EVENTS.splice(i, 1);
+    for (let i = CONSENTS.length - 1; i >= 0; i--) if (CONSENTS[i].email === user.email) CONSENTS.splice(i, 1);
+    user = null; confirmDelete = false; go('home'); toast('Cuenta borrada');
+  }
+});
+app.addEventListener('change', e => {
+  if (e.target.id !== 'acc-track') return;
+  user.consent = e.target.checked;
+  const a = ACCOUNTS.get(user.email); if (a) a.consent = user.consent;
+  CONSENTS.push({fecha: new Date().toISOString(), email: user.email, version: CONSENT_VERSION, texto: CONSENT_TXT, eleccion: user.consent ? 'acepta' : 'retira'});
+  toast(user.consent ? 'Gracias. Usaremos tu actividad para recomendarte inmuebles.' : 'Listo. Ya no ligamos tu actividad a tu cuenta.');
+  render();
+});
+
+// ---------- 8. Páginas legales (borradores) ----------
+const LEGAL_T = {privacidad: 'Política de privacidad', cookies: 'Política de cookies', terminos: 'Términos de uso'};
+const RESP = '<span class="por">[POR CONFIRMAR: razón social, RIF y dirección de San Bri]</span>';
+const MAILTO = '<span class="por">[POR CONFIRMAR: correo para solicitudes de privacidad]</span>';
+const LEGAL = {
+  privacidad: `<p>Esta política explica qué datos recoge San Bri Bienes Raíces en este sitio, para qué los usa y cómo puedes ejercer tus derechos.</p>
+    <h2>Responsable</h2><p>${RESP}. Teléfono: +58 414 135 6110. Correo: ${MAILTO}.</p>
+    <h2>Qué datos recogemos</h2><ul><li>Datos de tu cuenta: nombre, correo y el método con el que entras (Apple, Google, Facebook o correo).</li><li>Lo que nos escribes en formularios, el chat o al pedir una llamada: nombre, teléfono, correo y tu mensaje.</li><li>Si lo aceptas: tu actividad en el sitio (páginas, inmuebles y zonas que visitas, búsquedas, filtros, tiempo en cada página, clics a WhatsApp y el tipo de dispositivo).</li><li>Tus elecciones de consentimiento, con fecha y versión del texto.</li></ul>
+    <h2>Para qué los usamos</h2><ul><li>Darte acceso a tu cuenta y mostrarte los precios.</li><li>Responder tus consultas y, si lo aceptaste, que un asesor te contacte con inmuebles que encajen contigo.</li><li>Recomendarte propiedades y mejorar el sitio.</li><li>Enviarte un único correo de bienvenida al crear tu cuenta.</li></ul>
+    <h2>Con quién se comparten</h2><p>No vendemos tus datos. Los procesan, por encargo nuestro, estos proveedores:</p><ul><li>Supabase: base de datos, cuentas y archivos.</li><li>Vercel: alojamiento del sitio.</li><li>Resend: envío del correo de bienvenida.</li><li>Google: inicio de sesión con Google, Gemini (resumen de la actividad, sin nombre ni correo) y Google Sheets (informe interno).</li><li>Apple y Meta: solo si eliges entrar con ellos.</li></ul><p>Algunos de estos proveedores guardan los datos fuera de Venezuela.</p>
+    <h2>Cuánto tiempo los guardamos</h2><ul><li>Actividad en el sitio: 24 meses.</li><li>Cuenta: hasta que la borres.</li><li>Consultas: el tiempo necesario para atenderlas y cumplir obligaciones legales.</li></ul>
+    <h2>Tus derechos</h2><p>Puedes conocer, corregir, actualizar y pedir que se borren tus datos (habeas data, artículo 28 de la Constitución de la República Bolivariana de Venezuela; derecho a la privacidad, artículo 60). Desde Mi cuenta puedes descargar tus datos, retirar tu consentimiento y borrar tu cuenta. También puedes escribir a ${MAILTO}.</p>
+    <h2>Cambios</h2><p>Si cambiamos esta política, publicamos la nueva versión aquí con su fecha y, si el cambio es importante, te pedimos de nuevo tu consentimiento.</p>`,
+  cookies: `<p>Las cookies y el almacenamiento local son pequeños datos que el sitio guarda en tu navegador.</p>
+    <h2>Necesarias (siempre activas)</h2><ul><li>Sesión: para que sigas conectado.</li><li>Seguridad: protección contra robots en formularios.</li><li>Preferencias: tu elección de cookies y del modo día o noche.</li></ul>
+    <h2>Análisis (solo si aceptas)</h2><p>Medimos qué páginas, inmuebles y zonas visitas y cuánto tiempo, con un sistema propio de San Bri. No usamos Google Analytics ni publicidad de terceros.</p>
+    <h2>Personalización (solo si aceptas)</h2><p>Usamos lo que has visto para recomendarte inmuebles.</p>
+    <h2>Cómo cambiar tu elección</h2><p>En cualquier momento desde el enlace “Cookies” al pie de cada página. <button class="btn ghost" data-ck-open style="margin-top:8px">Configurar cookies</button></p>`,
+  terminos: `<p>Al usar este sitio aceptas estos términos.</p>
+    <h2>Quiénes somos</h2><p>${RESP}.</p>
+    <h2>Información de los inmuebles</h2><p>Los datos, fotos y precios vienen de los asesores de San Bri y pueden cambiar sin aviso. Precio y disponibilidad están sujetos a confirmación con un asesor. Nada de lo publicado es una oferta vinculante.</p>
+    <h2>Tu cuenta</h2><p>Eres responsable del acceso a tu cuenta. Puedes borrarla cuando quieras desde Mi cuenta.</p>
+    <h2>Comentarios</h2><p>Los comentarios se publican después de que el equipo los revisa. No se aceptan comentarios ofensivos, publicidad ni datos personales de terceros.</p>
+    <h2>Propiedad intelectual</h2><p>Los textos, fotos, logo e ilustraciones son de San Bri o de sus autores y no se pueden copiar sin permiso.</p>
+    <h2>Ley aplicable</h2><p>Estos términos se rigen por las leyes de la República Bolivariana de Venezuela. <span class="por">[POR CONFIRMAR: tribunales competentes]</span></p>`};
+function legal() {
+  const d = LEGAL[state.doc] ? state.doc : 'privacidad';
+  return `<div class="wrap legal">
+    <nav class="legal-tabs" aria-label="Documentos legales">${Object.entries(LEGAL_T).map(([k, t]) => `<button data-legal="${k}" ${k === d ? 'aria-current="page"' : ''}>${t}</button>`).join('')}</nav>
+    <h1>${LEGAL_T[d]}</h1>
+    <p class="draft">Borrador para revisión de un abogado. No publicar sin esa revisión. Versión ${CK_VERSION}.</p>
+    ${LEGAL[d]}</div>`;
+}
+
+// ---------- 9. Panel: clientes de ejemplo, gráficas y resumen de IA de ejemplo ----------
+let lastAnalysis = 'anoche, 2:00 a. m.';
+const CLIENTS = (() => {
+  let seed = 20261028; const r = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+  const heat = ['caliente', 'tibio', 'frio', 'caliente', 'tibio', 'frio', 'tibio', 'frio'];
+  const pool = P.filter(p => isPublic(p) && IMG[p.code] && p.muni);
+  const today = new Date();
+  return heat.map((h, i) => {
+    const m = MUNIS[[2, 0, 1, 2, 3, 4, 0, 1][i]];
+    const near = pool.filter(p => p.muni === m.id), far = pool.filter(p => p.muni !== m.id);
+    const pick = [...near.sort(() => r() - .5).slice(0, h === 'frio' ? 3 : 8), ...far.sort(() => r() - .5).slice(0, h === 'frio' ? 2 : 4)];
+    const k = h === 'caliente' ? 3 : h === 'tibio' ? 1.6 : .5;
+    const views = pick.map((p, j) => ({code: p.code, n: 1 + Math.floor(r() * 4 * k), secs: Math.round((40 + r() * 400) * k / (1 + j * .25))})).sort((a, b) => b.secs - a.secs);
+    const days = Array.from({length: 14}, (_, d) => r() < .18 * k + .05 ? 1 + Math.floor(r() * 3 * k) : 0);
+    const last = new Date(today - (h === 'frio' ? 6 + i : i % 3) * 864e5);
+    const zones = {}; views.forEach(v => { const z = byCode(v.code).zone; zones[z] = (zones[z] || 0) + v.secs; });
+    const prices = views.map(v => byCode(v.code).sale).filter(Boolean);
+    return {id: 'c' + (i + 1), name: `Cliente ${i + 1}`, heat: h, muni: m, views, days, last, wa: h === 'caliente' ? 2 + (i % 3) : h === 'tibio' ? 1 : 0,
+      total: views.reduce((s, v) => s + v.secs, 0), zones: Object.entries(zones).sort((a, b) => b[1] - a[1]), lo: Math.min(...prices), hi: Math.max(...prices),
+      consent: h !== 'frio' || i % 2 === 0};
+  });
+})();
+const HEAT = {frio: 'Frío', tibio: 'Tibio', caliente: 'Caliente'};
+const heatChip = h => `<span class="heat ${h}"><i aria-hidden="true"></i>${HEAT[h]}</span>`;
+const kUSD = n => n >= 1e6 ? 'US$' + (n / 1e6).toLocaleString('es-VE', {maximumFractionDigits: 1}) + ' M' : 'US$' + Math.round(n / 1e3) + ' mil';
+function clientsTable() {
+  return `<p class="admin-note">Clientes con cuenta y su actividad de los últimos 30 días. Todos son <span class="sample">ejemplo</span>. Toca un cliente para ver su ficha.</p>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Cliente</th><th>Última visita</th><th>Inmuebles más vistos</th><th>Zonas</th><th>Tiempo total</th><th>Interés</th></tr></thead><tbody>
+    ${CLIENTS.map(c => `<tr><td><button class="lnk" data-client="${c.id}">${c.name}</button> <span class="sample">ejemplo</span></td><td class="num">${fmtDate(c.last)}</td><td class="num">${c.views.slice(0, 3).map(v => v.code).join(', ')}</td><td>${c.zones.slice(0, 2).map(z => z[0]).join(', ')}</td><td class="num">${fmtDur(c.total)}</td><td>${heatChip(c.heat)}</td></tr>`).join('')}
+    </tbody></table></div>`;
+}
+function aiSummary(c) {
+  const top = c.views.slice(0, 3).map(v => byCode(v.code));
+  const types = {}; c.views.forEach(v => { const t = byCode(v.code).type; types[t] = (types[t] || 0) + v.secs; });
+  const type = Object.entries(types).sort((a, b) => b[1] - a[1])[0][0];
+  const rec = {caliente: `Llamar esta semana: volvió ${c.views[0].n} veces al ${c.views[0].code} y tocó WhatsApp ${c.wa} veces. Ofrecer visita y 2 o 3 opciones parecidas en ${c.zones[0][0]}.`,
+    tibio: `Enviar por WhatsApp una selección de ${type.toLowerCase()}s en ${c.zones[0][0]} dentro de su rango y preguntar si quiere visitar alguno.`,
+    frio: 'Sin contacto directo por ahora. Incluir en el próximo envío de novedades si dio su consentimiento.'}[c.heat];
+  return `<section class="ai"><h3>Resumen de la IA <span class="sample">ejemplo</span></h3>
+    <dl><dt>Resumen</dt><dd>Mira sobre todo ${type.toLowerCase()}s en ${c.muni.name}; pasó ${fmtDur(c.total)} en ${c.views.length} inmuebles en 30 días.</dd>
+    <dt>Inmuebles de interés</dt><dd class="num">${top.map(p => `${p.code} (${esc(p.type)}, ${esc(p.zone)})`).join('; ')}</dd>
+    <dt>Zonas</dt><dd>${c.zones.slice(0, 3).map(z => z[0]).join(', ')}</dd>
+    <dt>Presupuesto estimado</dt><dd class="num">${kUSD(c.lo)} a ${kUSD(c.hi)}</dd>
+    <dt>Tipo de inmueble</dt><dd>${type}</dd>
+    <dt>Nivel de interés</dt><dd>${heatChip(c.heat)}</dd>
+    <dt>Recomendación para el asesor</dt><dd>${rec}</dd></dl>
+    <p class="hint" style="font-size:12.5px">Gemini recibe solo un id y los eventos, sin nombre ni correo. Último análisis: ${lastAnalysis}.</p></section>`;
+}
+function barsH(rows, valFmt, opts = {}) {
+  const lw = opts.lw || 150, w = 560, rh = 28, max = Math.max(...rows.map(r => r.v), 1);
+  return `<svg viewBox="0 0 ${w} ${rows.length * rh + 4}" role="img" aria-label="${esc(opts.label || '')}">${rows.map((r, i) => {
+    const bw = Math.max(3, (w - lw - 70) * r.v / max), y = i * rh;
+    return `<g><title>${esc(r.l)}: ${valFmt(r.v)}</title><text x="${lw - 10}" y="${y + 17}" text-anchor="end">${esc(r.l)}</text><rect class="bar" x="${lw}" y="${y + 6}" width="${bw}" height="14" rx="3"/><text class="v num" x="${lw + bw + 8}" y="${y + 17}">${valFmt(r.v)}</text></g>`; }).join('')}</svg>`;
+}
+function columns(vals, labels) {
+  const w = 560, hgt = 160, max = Math.max(...vals, 1), bw = (w - 30) / vals.length;
+  return `<svg viewBox="0 0 ${w} ${hgt + 24}" role="img" aria-label="Visitas por día, últimos 14 días"><g class="grid"><line x1="30" x2="${w}" y1="${hgt}" y2="${hgt}"/><line x1="30" x2="${w}" y1="${hgt / 2}" y2="${hgt / 2}" stroke-dasharray="2 4"/></g>
+    <text x="24" y="${hgt / 2 + 4}" text-anchor="end">${Math.round(max / 2)}</text><text x="24" y="12" text-anchor="end">${max}</text>
+    ${vals.map((v, i) => { const bh = Math.max(2, hgt * v / max), x = 30 + i * bw + 3; return `<g><title>${labels[i]}: ${v} visitas</title><rect class="bar" x="${x}" y="${hgt - bh}" width="${bw - 6}" height="${bh}" rx="3"/>${i % 2 === 0 ? `<text x="${x + (bw - 6) / 2}" y="${hgt + 16}" text-anchor="middle">${labels[i]}</text>` : ''}</g>`; }).join('')}</svg>`;
+}
+function clientFicha(c) {
+  const tl = []; c.views.slice(0, 8).forEach((v, i) => tl.push({d: new Date(c.last - i * (c.heat === 'frio' ? 3 : 1.3) * 864e5 - i * 37e5), t: `Vio ${v.code} (${byCode(v.code).type}, ${byCode(v.code).zone}) · ${fmtDur(v.secs)}`}));
+  for (let k = 0; k < c.wa; k++) tl.push({d: new Date(c.last - k * 2 * 864e5 + 6e5), t: `Tocó WhatsApp desde ${c.views[k].code}`});
+  tl.sort((a, b) => b.d - a.d);
+  return `<button class="btn ghost" data-client-back>Volver a clientes</button>
+    <div style="margin-top:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap"><h2 style="font-size:clamp(26px,3vw,36px)">${c.name}</h2><span class="sample">ejemplo</span>${heatChip(c.heat)}</div>
+    <p class="muted" style="font-size:14px;margin-top:6px">Última visita ${fmtDate(c.last)} · ${fmtDur(c.total)} en total · ${c.wa} ${c.wa === 1 ? 'clic' : 'clics'} a WhatsApp · rango de precios que mira: ${kUSD(c.lo)} a ${kUSD(c.hi)} · consentimiento de actividad: ${c.consent ? 'sí' : 'no'}</p>
+    <div class="ficha">
+      <div style="display:grid;gap:24px;align-content:start">${aiSummary(c)}
+        <section><h3 style="margin-bottom:8px">Línea de tiempo</h3><ol class="tl">${tl.map(x => `<li><time class="num">${fmtDate(x.d)} ${fmtTime(x.d)}</time><span>${x.t}</span></li>`).join('')}</ol></section></div>
+      <div style="display:grid;gap:24px;align-content:start">
+        <section class="chart"><h3>Top 10 inmuebles por tiempo</h3>${barsH(c.views.slice(0, 10).map(v => ({l: v.code + ' · ' + byCode(v.code).zone, v: v.secs})), fmtDur, {lw: 220, label: 'Inmuebles por tiempo'})}</section>
+        <section class="chart"><h3>Zonas por tiempo</h3>${barsH(c.zones.slice(0, 6).map(z => ({l: z[0], v: z[1]})), fmtDur, {label: 'Zonas por tiempo'})}</section>
+      </div></div>`;
+}
+function chartsTab() {
+  const byProp = {}, byZone = {};
+  CLIENTS.forEach(c => c.views.forEach(v => { byProp[v.code] = (byProp[v.code] || 0) + v.n; const z = byCode(v.code).zone; byZone[z] = (byZone[z] || 0) + v.n; }));
+  const top = o => Object.entries(o).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const days = Array.from({length: 14}, (_, d) => CLIENTS.reduce((s, c) => s + c.days[d], 0) + 3 + (d * 7 % 5));
+  const labels = Array.from({length: 14}, (_, d) => fmtDate(new Date(Date.now() - (13 - d) * 864e5)));
+  const visits = days.reduce((a, b) => a + b, 0), fichas = CLIENTS.reduce((s, c) => s + c.views.reduce((t, v) => t + v.n, 0), 0), wa = CLIENTS.reduce((s, c) => s + c.wa, 0);
+  const pct = (a, b) => Math.round(a / b * 100) + ' %';
+  return `<p class="admin-note">Datos de ejemplo de 8 clientes. En el sitio real salen de la tabla de eventos. <span class="sample">ejemplo</span></p>
+    <div class="kpis num"><div class="kpi"><span>Clientes</span><b>${CLIENTS.length}</b></div><div class="kpi"><span>Visitas, 14 días</span><b>${visits}</b></div><div class="kpi"><span>Tiempo total</span><b>${fmtDur(CLIENTS.reduce((s, c) => s + c.total, 0))}</b></div><div class="kpi"><span>Clics a WhatsApp</span><b>${wa}</b></div></div>
+    <div class="charts">
+      <section class="chart"><h3>Inmuebles más vistos</h3>${barsH(top(byProp).map(([k, v]) => ({l: k + ' · ' + byCode(k).zone, v})), v => v + ' vistas', {lw: 220, label: 'Inmuebles más vistos'})}</section>
+      <section class="chart"><h3>Zonas más vistas</h3>${barsH(top(byZone).map(([k, v]) => ({l: k, v})), v => v + ' vistas', {lw: 190, label: 'Zonas más vistas'})}</section>
+      <section class="chart"><h3>Visitas por día</h3>${columns(days, labels)}</section>
+      <section class="chart"><h3>Embudo: visita → ficha → WhatsApp</h3>${barsH([{l: 'Visitas', v: visits}, {l: 'Vieron una ficha', v: Math.round(visits * .62)}, {l: 'Tocaron WhatsApp', v: wa}], v => v + ' (' + pct(v, visits) + ')', {lw: 150, label: 'Embudo de visita a WhatsApp'})}</section>
+    </div>
+    <p class="admin-note" style="margin-top:20px">Cada noche, y con “Analizar ahora”, el resumen se copia a la hoja de Google Sheets: pestaña Resumen (una fila por cliente, con gráficas), pestaña Eventos y una pestaña por cliente solo para los tibios y calientes.</p>`;
+}
+function mailTab() {
+  return `<p class="admin-note">Se envía una sola vez, cuando la persona crea su cuenta, al correo con el que se registró. Usa {{nombre}} para el nombre.</p>
+    <div class="tpl"><form class="form" id="mail-form"><label for="m-subj">Asunto<input id="m-subj" type="text" value="${esc(MAIL.asunto)}"></label>
+      <label for="m-body">Cuerpo<textarea id="m-body" rows="10">${esc(MAIL.cuerpo)}</textarea></label>
+      <button class="btn" type="submit" style="justify-self:start">Guardar plantilla</button></form>
+      <div><p class="muted" style="font-size:13px;margin-bottom:8px">Vista previa</p><div id="mail-live">${mailPreview('cliente@correo.com', 'María')}</div></div></div>`;
+}
+function eventsTab() {
+  const rows = EVENTS.slice(-60).reverse();
+  return `<p class="admin-note">Eventos reales de esta visita, registrados por el prototipo con las mismas columnas que tendrá la tabla events. ${CK?.analisis ? '' : '<b>Las cookies de análisis no están aceptadas, así que no se registra nada.</b>'} Se pierden al recargar.</p>
+    ${rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Hora</th><th>Tipo</th><th>Código</th><th>Zona</th><th>Ruta</th><th>Segundos</th><th>Usuario</th><th>Dispositivo</th></tr></thead><tbody>
+    ${rows.map(e => `<tr><td class="num">${fmtTime(new Date(e.fecha))}</td><td>${e.tipo}</td><td class="num">${e.codigo || ''}</td><td>${esc(e.zona || e.municipio || '')}</td><td>${esc(e.ruta)}</td><td class="num">${e.segundos_visibles}</td><td>${e.user_id || e.anon_id}</td><td>${e.dispositivo}</td></tr>`).join('')}</tbody></table></div>` : '<p class="muted">Todavía no hay eventos.</p>'}
+    <h2 style="font-size:24px;margin:36px 0 12px">Consentimientos</h2>
+    ${CONSENTS.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Fecha</th><th>Correo</th><th>Versión</th><th>Elección</th></tr></thead><tbody>${CONSENTS.map(c => `<tr><td class="num">${fmtDate(new Date(c.fecha))} ${fmtTime(new Date(c.fecha))}</td><td>${esc(c.email)}</td><td>${c.version}</td><td>${c.eleccion}</td></tr>`).join('')}</tbody></table></div>` : '<p class="muted">Nadie ha creado una cuenta en esta visita.</p>'}`;
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-client]'); if (c) { state.client = c.dataset.client; render(); scrollTo(0, 0); return; }
+  if (e.target.closest('[data-client-back]')) { state.client = null; render(); return; }
+  const an = e.target.closest('#analyze');
+  if (an) { an.disabled = true; an.textContent = 'Analizando…'; setTimeout(() => { lastAnalysis = 'hoy, ' + fmtTime(new Date()); render(); toast('Análisis de ejemplo actualizado: 8 clientes'); }, 1200); }
+});
+app.addEventListener('input', e => {
+  if (e.target.id !== 'm-subj' && e.target.id !== 'm-body') return;
+  const keep = MAIL; MAIL = {asunto: document.getElementById('m-subj').value, cuerpo: document.getElementById('m-body').value};
+  document.getElementById('mail-live').innerHTML = mailPreview('cliente@correo.com', 'María'); MAIL = keep;
+});
+app.addEventListener('submit', e => {
+  if (e.target.id !== 'mail-form') return;
+  e.preventDefault(); MAIL = {asunto: document.getElementById('m-subj').value, cuerpo: document.getElementById('m-body').value}; toast('Plantilla guardada');
+});
+
 go('home');
 </script>
 
