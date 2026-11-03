@@ -695,6 +695,16 @@ dialog{box-shadow:0 24px 64px -12px rgba(0,0,0,.3)}
 @media(max-width:600px){.dd-nav{display:none}.dd-card{flex-basis:84vw}}
 .dd-head h1{font-weight:600;font-size:clamp(28px,3.4vw,46px);letter-spacing:-.02em}
 .crumb + .dd{margin-top:16px}
+@supports not (aspect-ratio:1/1){
+  .photo,.gallery .photo,.gallery .side .photo,.gal-body .photo{height:0;padding-bottom:75%;min-height:0}
+  .show-item .photo,.rail .show-item .photo{padding-bottom:125%}
+  .door .photo{padding-bottom:56.25%}
+  .dd-photo .photo{height:auto;padding-bottom:0;min-height:260px}
+  .zt-ph{height:0;padding-bottom:75%}
+  .agent-ph{height:0;padding-bottom:100%}
+  .map-card{height:0;padding-bottom:62.5%}
+  .feature-ph{padding-bottom:0}
+}
 
 /* v16 (cambios del cliente, 27 oct): modo día tomado de la ilustración del Ávila y modo noche azul.
    Día es el predeterminado. Todo color sale de estas variables. */
@@ -723,26 +733,29 @@ html{scrollbar-color:var(--mauve) var(--paper);accent-color:var(--accent);caret-
 .price,.rail .ri-price{color:var(--price)}
 .dd-ic{color:var(--accent)}
 .dd-badge{background:var(--accent);color:var(--accent-ink)}
-header.top{background:color-mix(in srgb,var(--paper) 92%,transparent)}
-.theme-anim,.theme-anim *:not(.av-astro):not(.av-mtn):not(.knob),.theme-anim *::before,.theme-anim *::after{transition:background-color .6s ease .45s,color .6s ease .45s,border-color .6s ease .45s,fill .6s ease .45s,stroke .6s ease .45s!important}
+header.top{background:var(--paper)}
+@supports (background:color-mix(in srgb,red 50%,blue)){header.top{background:color-mix(in srgb,var(--paper) 92%,transparent)}}
+/* El cambio de paleta es una sola vez, con un fundido de la página entera (View Transitions) donde existe. */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.5s;animation-timing-function:ease}
 
 /* 1. El Ávila: cielo (color plano), sol y luna (SVG), montaña recortada (WebP con alfa) */
 .mast .wrap{padding-block:24px 8px}
-.avila{position:relative;overflow:hidden;isolation:isolate;container-type:inline-size;aspect-ratio:671/359;background:var(--sky);transition:background-color .6s ease .45s}
+.avila{position:relative;overflow:hidden;isolation:isolate;container-type:inline-size;aspect-ratio:671/359;background:var(--sky)}
+@supports not (aspect-ratio:1/1){.avila{height:0;padding-bottom:53.5%}}
 .av-mtn{position:absolute;left:0;bottom:0;width:100%;height:auto;z-index:2;pointer-events:none;user-select:none;max-width:none}
-.av-night{opacity:0;transition:opacity .6s ease .45s}
+.av-mtn{will-change:opacity}
+.av-night{opacity:0}
 [data-theme="dark"] .av-night{opacity:1}
-.av-day{transition:opacity 0s .45s}
-[data-theme="dark"] .av-day{opacity:0;transition:opacity 0s 1.05s}
+[data-theme="dark"] .av-day{opacity:0}
 .avila .mast-logo{position:absolute;z-index:3;left:2%;top:3%;width:33%;margin:0}
 .avila .mast-logo svg{width:100%;margin:0}
-.av-phrase{position:absolute;z-index:3;left:44%;top:18%;width:41%;margin:0;text-align:center;color:var(--brand-navy);font-weight:600;font-size:3.1cqw;line-height:1.3;letter-spacing:.04em;text-wrap:balance}
-.av-astro{position:absolute;z-index:1;left:var(--ax,87%);top:var(--ay,15%);width:var(--as,6.5%);aspect-ratio:1;overflow:visible}
+.av-phrase{position:absolute;z-index:3;left:44%;top:18%;width:41%;margin:0;text-align:center;color:var(--brand-navy);font-weight:600;font-size:clamp(14px,2.7vw,34px);font-size:3.1cqw;line-height:1.3;letter-spacing:.04em;text-wrap:balance}
+.av-astro{will-change:transform;position:absolute;z-index:1;left:var(--ax,87%);top:var(--ay,15%);width:var(--as,6.5%);aspect-ratio:1;overflow:visible}
 .av-sun{transform:none;opacity:1;transition:transform .7s cubic-bezier(.2,.7,.3,1) .9s,opacity 0s .9s}
 .av-moon{transform:translateY(var(--drop,420%));opacity:0;transition:transform .6s cubic-bezier(.6,0,.8,.4),opacity 0s .6s}
-[data-theme="dark"] .av-sun{transform:translateY(var(--drop,420%));opacity:0;transition:transform .6s cubic-bezier(.6,0,.8,.4),opacity 0s .6s}
-[data-theme="dark"] .av-moon{transform:none;opacity:1;transition:transform .7s cubic-bezier(.2,.7,.3,1) .9s,opacity 0s .9s}
-.av-stars{position:absolute;inset:0;z-index:1;opacity:0;transition:opacity .6s ease .45s;pointer-events:none}
+.avila.is-night .av-sun{transform:translateY(var(--drop,420%));opacity:0;transition:transform .6s cubic-bezier(.6,0,.8,.4),opacity 0s .6s}
+.avila.is-night .av-moon{transform:none;opacity:1;transition:transform .7s cubic-bezier(.2,.7,.3,1) .9s,opacity 0s .9s}
+.av-stars{position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none}
 .av-stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#DCE5F0}
 [data-theme="dark"] .av-stars{opacity:.8}
 .avila .theme-sw{position:absolute;z-index:4;top:14px;right:14px}
@@ -755,10 +768,8 @@ header.top{background:color-mix(in srgb,var(--paper) 92%,transparent)}
   .av-stars i:nth-child(2),.av-stars i:nth-child(4),.av-stars i:nth-child(10){display:none}
 }
 @media (prefers-reduced-motion:reduce){
-  .av-sun,.av-moon,[data-theme="dark"] .av-sun,[data-theme="dark"] .av-moon{transform:none!important;transition:opacity .3s ease!important}
-  .avila,.av-night,.av-stars{transition-delay:0s;transition-duration:.3s}
-  .av-day,[data-theme="dark"] .av-day{transition-delay:.3s}
-  .theme-anim,.theme-anim *:not(.av-astro):not(.av-mtn){transition-duration:.3s!important;transition-delay:0s!important}
+  .av-sun,.av-moon,.avila.is-night .av-sun,.avila.is-night .av-moon{transform:none!important;transition:opacity .3s ease!important}
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.3s}
 }
 
 /* Interruptor día / noche */
@@ -1182,12 +1193,12 @@ function rail(op) {
 function home() {
   return `
   <div class="mast"><div class="wrap">
-    <section class="avila" aria-label="San Bri Bienes Raíces, con el Ávila de fondo">
+    <section class="avila ${document.documentElement.dataset.theme === 'dark' ? 'is-night' : ''}" aria-label="San Bri Bienes Raíces, con el Ávila de fondo">
     <div class="av-stars" aria-hidden="true">${STARS.map(([x, y]) => `<i style="left:${x}%;top:${y}%"></i>`).join('')}</div>
     <svg class="av-astro av-sun" viewBox="-60 -60 120 120" aria-hidden="true"><g stroke="#9F949A" stroke-width="2.4" stroke-linecap="round">${Array.from({length:16}, (_, i) => { const a = i * Math.PI / 8, r1 = 34, r2 = i % 2 ? 44 : 52; return `<line x1="${(Math.cos(a)*r1).toFixed(1)}" y1="${(Math.sin(a)*r1).toFixed(1)}" x2="${(Math.cos(a)*r2).toFixed(1)}" y2="${(Math.sin(a)*r2).toFixed(1)}"/>`; }).join('')}</g><circle r="27" fill="#F2EFF0" stroke="#513F45" stroke-width="2.2"/><circle r="20" fill="none" stroke="#9F949A" stroke-width="1" stroke-dasharray="2 3"/></svg>
     <svg class="av-astro av-moon" viewBox="-60 -60 120 120" aria-hidden="true"><circle r="46" fill="#DCE5F0" opacity=".12"/><circle r="30" fill="#E9EEF5"/><circle cx="-9" cy="-6" r="6" fill="#C9D3E0" opacity=".7"/><circle cx="10" cy="9" r="4" fill="#C9D3E0" opacity=".6"/><circle cx="6" cy="-14" r="2.6" fill="#C9D3E0" opacity=".6"/></svg>
-    <img class="av-mtn av-day" src="img/avila-dia.webp" alt="" width="1342" height="718" fetchpriority="high">
-    <img class="av-mtn av-night" src="img/avila-noche.webp" alt="" width="1342" height="718">
+    <picture><source type="image/webp" srcset="img/avila-dia-hd.webp"><img class="av-mtn av-day" src="img/avila-dia-hd.png" alt="" width="2684" height="1436" fetchpriority="high"></picture>
+    <picture><source type="image/webp" srcset="img/avila-noche-hd.webp"><img class="av-mtn av-night" src="img/avila-noche-hd.png" alt="" width="2684" height="1436" decoding="async"></picture>
     <h1 class="mast-logo ${introPlayed ? '' : 'play'}"><span class="sr">San Bri Bienes Raíces</span>
       <svg viewBox="80 170 800 520" aria-hidden="true">
         <g class="lg-house"><path class="lg-roof" d="M372 498 L440 442 L508 498 L488 498 L440 459 L392 498Z" fill="var(--roof)"/>
@@ -1877,19 +1888,22 @@ document.getElementById('gal-x').onclick = () => document.getElementById('gal-dl
 
 // ---------- 1. Modo día / noche. La primera visita abre en día; la elección queda guardada. ----------
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-function syncThemeSwitches() {
-  const dark = document.documentElement.dataset.theme === 'dark';
+function syncThemeSwitches(dark = document.documentElement.dataset.theme === 'dark') {
   document.querySelectorAll('[data-theme-sw]').forEach(b => b.setAttribute('aria-checked', dark));
 }
 let themeT;
+// The sun and moon move with transform only (class on the box). The site palette swaps once, while the sun
+// is behind the ridge, inside a view transition so the browser crossfades two frames instead of
+// re-transitioning every element's colours.
 function setTheme(dark) {
-  const r = document.documentElement;
+  const r = document.documentElement, box = document.querySelector('.avila');
   clearTimeout(themeT);
-  r.classList.add('theme-anim');
-  r.dataset.theme = dark ? 'dark' : 'light';
   try { localStorage.setItem('sb-theme', dark ? 'dark' : 'light'); } catch {}
-  syncThemeSwitches();
-  themeT = setTimeout(() => r.classList.remove('theme-anim'), reduceMotion ? 400 : 1700);
+  syncThemeSwitches(dark);
+  if (box) box.classList.toggle('is-night', dark);
+  const swap = () => { r.dataset.theme = dark ? 'dark' : 'light'; };
+  const run = () => (document.startViewTransition && !document.hidden) ? document.startViewTransition(swap) : swap();
+  if (box && !reduceMotion) themeT = setTimeout(run, 560); else run();
 }
 document.addEventListener('click', e => { const b = e.target.closest('[data-theme-sw]'); if (b) setTheme(b.getAttribute('aria-checked') !== 'true'); });
 
