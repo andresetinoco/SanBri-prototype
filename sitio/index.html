@@ -898,6 +898,41 @@ pre.json{max-height:50vh;overflow:auto;background:var(--mist);padding:14px;font-
 @media(max-width:860px){.ficha{grid-template-columns:1fr}}
 .tpl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
 @media(max-width:860px){.tpl{grid-template-columns:1fr}}
+
+/* v19 (20 nov): tarjetas estilo "13. Moderna". Mismo orden y mismas secciones; cambia la tarjeta:
+   fondo propio con esquinas de 24px, foto redondeada dentro, píldora de operación y píldoras de m², hab. y baños. */
+:root,:root[data-theme="light"]{--card:#F6F5F5;--chip:#E6E2E4;--pill:#D3E1EF;--pill-ink:#1A3351;--pill-res:#9A1F3C;--pill-res-ink:#FFFFFF}
+:root[data-theme="dark"]{--card:#151E2B;--chip:#202B3B;--pill:#A9C0DA;--pill-ink:#0E141D;--pill-res:#E07A92;--pill-res-ink:#0E141D}
+.card,.d6-card,.show-item{background:var(--card);border-radius:24px;padding:10px;gap:12px;align-content:start;color:var(--ink);transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s ease}
+.mc-ph{position:relative;border-radius:18px;overflow:hidden;isolation:isolate;-webkit-mask-image:-webkit-radial-gradient(white,black)}
+.card .meta,.d6-card .mc-bd,.show-item .show-cap{display:grid;gap:4px;padding:2px 8px 8px}
+.mc-t{font-family:var(--text);font-size:18px;font-weight:600;line-height:1.3;margin:0;color:var(--ink)}
+.mc-z{font-size:13px;color:var(--muted)}
+.mc-p,.mc-p.price,.rail .mc-p.ri-price{font-size:20px;font-weight:700;color:var(--price);letter-spacing:0;margin-top:2px}
+.mc-p .price-lock .blur{font-size:20px}
+.mc-ft{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.mc-ft span{background:var(--chip);color:var(--ink);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:600;line-height:1.3}
+.pill{position:absolute;left:10px;top:10px;z-index:2;background:var(--pill);color:var(--pill-ink);border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700;letter-spacing:.02em;line-height:1.3;text-transform:none}
+.pill.res{background:var(--pill-res);color:var(--pill-res-ink)}
+.d6-card .det{border-radius:999px;margin:6px 0 0}
+.rail .show-item .photo,.show-item .photo{aspect-ratio:4/3}
+@supports not (aspect-ratio:1){.show-item .photo,.rail .show-item .photo{padding-bottom:75%}}
+@media (hover:hover){
+  .card:hover,.grid .card:hover,.d6-card:hover,.show-item:hover{transform:translateY(-4px);box-shadow:0 18px 40px -20px var(--shadow);opacity:1}
+}
+@media (prefers-reduced-motion:reduce){.card,.d6-card,.show-item{transition:none}}
+.foot-legal{display:block!important;margin-top:36px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);font-size:13px;color:var(--on-deep-muted)}
+.foot-legal p{margin:0;font-size:13px}
+footer a.wa-num{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.mail-b a.mail-btn{display:inline-block;background:var(--accent);color:var(--accent-ink);text-decoration:none;border-radius:999px;padding:9px 16px;font-weight:600;font-size:14px;margin:2px 0}
+.mail-b a.mail-link{color:var(--accent);text-decoration:underline}
+.tpl .form,.tpl .form label{align-content:start;align-self:start}
+.tpl-pick{display:flex;gap:6px;background:var(--mist);border-radius:999px;padding:4px;justify-self:start;margin-bottom:16px}
+.tpl-pick button{border:0;background:none;border-radius:999px;padding:8px 16px;font:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.tpl-pick button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.who{border:0;margin:0;padding:0;display:grid;gap:8px}
+.who legend{font-size:14px;font-weight:600;margin-bottom:6px;padding:0}
+.form .who label,.who label{display:flex;gap:10px;align-items:flex-start;font-size:14px;font-weight:400;letter-spacing:0;text-transform:none;cursor:pointer}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -938,7 +973,7 @@ pre.json{max-height:50vh;overflow:auto;background:var(--mist);padding:14px;font-
     <div>
       <h4>Contacto</h4>
       <ul>
-        <li class="num">+58 414 135 6110</li>
+        <li class="num"><a class="wa-num" href="https://wa.me/584141356110" target="_blank" rel="noopener">0414-135-6110</a> (teléfono y WhatsApp)</li>
         <li class="num">+58 414 322 7226</li>
         <li>ventas@san-bri.com</li>
         <li>El Hatillo, Caracas</li>
@@ -955,6 +990,7 @@ pre.json{max-height:50vh;overflow:auto;background:var(--mist);padding:14px;font-
       </ul>
     </div>
   </div>
+  <div class="wrap foot-legal"><p>© 2026 Corredores Reob C.A. · RIF J-31658884-0 · San Bri Bienes Raíces, Caracas, Venezuela</p></div>
 </footer>
 
 <div class="mbar" aria-label="Contacto rápido">
@@ -1154,13 +1190,17 @@ function go(view, extra = {}) {
   trackView();
 }
 
+// v19: tarjeta estilo Moderna. Píldora de operación sobre la foto y píldoras de m², habitaciones y baños.
+const opPill = (p, op) => p.status === 'reservado' ? '<span class="pill res">Reservado</span>' : `<span class="pill">${op === 'alquiler' ? 'En alquiler' : 'En venta'}</span>`;
+const mcChips = p => `<span class="mc-ft num">${[sizeOf(p) && m2(sizeOf(p)), p.bd && p.bd + ' hab.', p.ba && p.ba + (p.ba === 1 ? ' baño' : ' baños')].filter(Boolean).map(t => `<span>${t}</span>`).join('')}</span>`;
 function card(p, op) {
   return `<button class="card" data-code="${p.code}" data-op="${op}">
-    <div style="position:relative">${photo(p,0,'Foto pendiente')}${p.status === 'reservado' ? '<span class="badge">Reservado</span>' : ''}</div>
+    <div class="mc-ph">${photo(p,0,'Foto pendiente')}${opPill(p, op)}</div>
     <div class="meta">
-      <h3>${esc(title(p))}</h3>
-      <span class="zone">${p.zone}, ${p.city}</span>
-      <span class="bottom"><span class="price num">${priceView(p, op)}</span><span class="code num">Cód. ${p.code}</span></span>
+      <h3 class="mc-t">${esc(p.type)} en ${esc(p.zone)}</h3>
+      <span class="mc-z">${p.zone}, ${p.city} · Cód. ${p.code}</span>
+      <span class="price mc-p num">${priceView(p, op)}</span>
+      ${mcChips(p)}
     </div>
   </button>`;
 }
@@ -1168,17 +1208,16 @@ function card(p, op) {
 // 2. Propiedades destacadas (diseño 6). En producción: casilla "destacada" en el panel, máximo 6, con orden manual.
 let FEATURED = [['8407206','venta'],['9755783','alquiler'],['2575330','venta'],['9003242','alquiler'],['7120619','venta'],['4571399','venta']];
 function d6card(p, op) {
-  const meta = [op === 'venta' ? 'Venta' : 'Alquiler', sizeOf(p) && m2(sizeOf(p)), p.bd && p.bd + ' habitaciones'].filter(Boolean).join(' · ');
-  return `<button class="d6-card" data-code="${p.code}" data-op="${op}"><div class="ph-wrap">${photo(p)}</div><b>${esc(p.type)} en ${esc(p.zone)}</b><span class="d6-meta num">${meta}</span><span class="pp num">${priceView(p, op)}</span><span class="det">Detalles</span></button>`;
+  return `<button class="d6-card" data-code="${p.code}" data-op="${op}"><div class="ph-wrap mc-ph">${photo(p)}${opPill(p, op)}</div><span class="mc-bd"><b class="mc-t">${esc(p.type)} en ${esc(p.zone)}</b><span class="pp mc-p num">${priceView(p, op)}</span>${mcChips(p)}<span class="det">Detalles</span></span></button>`;
 }
 const STARS = [[37,7],[41,30],[52,6],[58,36],[66,4],[78,8],[93,30],[96,6],[44,14],[71,33],[86,40],[31,24]];
 function rail(op) {
   const pick = {venta:['8407206','2575375','7120619','9805872','2575330','3773558','7388468','2575123','9422238','4571399'], alquiler:['9755783','6776622','9028674','9003242','7465203','9304389','6761253','7465589']}[op];
   const items = pick.map(byCode).filter(p => p && isPublic(p) && p.op.includes(op));
   const it = (p, dup) => `<button class="show-item" data-code="${p.code}" data-op="${op}" ${dup ? 'aria-hidden="true" tabindex="-1"' : ''}>
-      <div class="ph-wrap">${photo(p,0,'Foto pendiente')}${p.status === 'reservado' ? '<span class="badge">Reservado</span>' : ''}</div>
-      <span class="show-cap"><span class="show-name">${esc(p.type)} en ${esc(p.zone)}</span>
-      <span class="ri-meta"><span>${sizeOf(p) ? m2(sizeOf(p)) + ' · ' : ''}Cód. ${p.code}</span><span class="ri-price num">${priceView(p, op)}</span></span></span>
+      <div class="ph-wrap mc-ph">${photo(p,0,'Foto pendiente')}${opPill(p, op)}</div>
+      <span class="show-cap"><span class="mc-t">${esc(p.type)} en ${esc(p.zone)}</span>
+      <span class="mc-z num">Cód. ${p.code}</span><span class="ri-price mc-p num">${priceView(p, op)}</span>${mcChips(p)}</span>
     </button>`;
   return `<section class="rail-sec" aria-labelledby="rl-${op}">
     <div class="wrap rail-head">
@@ -1463,7 +1502,7 @@ function nosotros() {
       <h2>Visítanos o escríbenos</h2>
       <div class="contact-grid">
         <div><h3>Oficina</h3><p>El Hatillo, Caracas<br><span class="muted">Dirección exacta pendiente</span></p></div>
-        <div><h3>Teléfonos</h3><p class="num">+58 414 135 6110<br>+58 414 322 7226</p></div>
+        <div><h3>Teléfonos</h3><p class="num"><a href="https://wa.me/584141356110" target="_blank" rel="noopener">0414-135-6110</a> (teléfono y WhatsApp)<br>+58 414 322 7226</p><p class="muted" style="font-size:13px;margin-top:8px">Corredores Reob C.A. · RIF J-31658884-0</p></div>
         <div><h3>Redes</h3><p><a href="https://www.instagram.com/inmobiliariasanbri" target="_blank" rel="noopener">Instagram</a><br><a href="https://www.facebook.com/sanbribienesraices" target="_blank" rel="noopener">Facebook</a><br><a href="https://twitter.com/Sanbri_ve" target="_blank" rel="noopener">X</a></p></div>
       </div>
     </section>
@@ -2021,6 +2060,9 @@ function loginStep(step) {
     <p class="sample" style="margin:0">Vista previa: cualquier código de 6 dígitos funciona.</p>`;
   if (step === 'new') el.innerHTML = `<p class="muted" style="font-size:14px">Entraste con ${PROV[pend.provider]}${pend.provider === 'apple' ? '. Apple solo nos da tu nombre esta primera vez; lo guardamos en tu perfil. Si elegiste “Ocultar mi correo”, te escribimos a tu dirección de reenvío de Apple.' : '.'}</p>
     <label for="l-name">Nombre<input id="l-name" type="text" autocomplete="name" value="${esc(pend.name || '')}"></label>
+    <fieldset class="who"><legend>¿Cómo usarás San Bri?</legend>
+      <label for="l-who-c"><input id="l-who-c" type="radio" name="l-who" value="cliente" checked><span>Busco un inmueble para comprar o alquilar</span></label>
+      <label for="l-who-a"><input id="l-who-a" type="radio" name="l-who" value="aliado"><span>Soy corredor inmobiliario o aliado</span></label></fieldset>
     <label class="consent" for="l-track"><input id="l-track" type="checkbox"><span>${CONSENT_TXT}.</span></label>
     <p class="hint">Es opcional y puedes cambiarlo cuando quieras en Mi cuenta. Al crear tu cuenta aceptas los <button type="button" class="linklike" data-legal="terminos" style="background:none;border:0;padding:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer">Términos de uso</button> y la <button type="button" class="linklike" data-legal="privacidad" style="background:none;border:0;padding:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer">Política de privacidad</button>.</p>${msg}
     <button class="btn" type="submit">Crear cuenta</button>`;
@@ -2055,7 +2097,8 @@ document.getElementById('login-form').addEventListener('submit', e => {
   if (loginAt === 'new') {
     const name = val('l-name'); if (!name) return lMsg('Escribe tu nombre.');
     const consent = document.getElementById('l-track').checked;
-    ACCOUNTS.set(pend.email, {name, provider: pend.provider, consent, created: new Date().toISOString().slice(0, 10)});
+    const tipo = document.querySelector('input[name="l-who"]:checked')?.value || 'cliente';
+    ACCOUNTS.set(pend.email, {name, provider: pend.provider, consent, tipo, created: new Date().toISOString().slice(0, 10)});
     CONSENTS.push({fecha: new Date().toISOString(), email: pend.email, version: CONSENT_VERSION, texto: CONSENT_TXT, eleccion: consent ? 'acepta' : 'no acepta'});
     pend.name = name;
     signIn(true);
@@ -2063,7 +2106,7 @@ document.getElementById('login-form').addEventListener('submit', e => {
 });
 function signIn(isNew) {
   const a = ACCOUNTS.get(pend.email) || {name: TEAM.find(t => t.email === pend.email)?.name || pend.email.split('@')[0], provider: pend.provider, consent: false};
-  user = {id: 'u-' + [...pend.email].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7).toString(36), email: pend.email, name: a.name, provider: a.provider, consent: a.consent};
+  user = {id: 'u-' + [...pend.email].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7).toString(36), email: pend.email, name: a.name, provider: a.provider, consent: a.consent, tipo: a.tipo || 'cliente'};
   if (user.consent) EVENTS.forEach(ev => { if (ev.anon_id === anonId && !ev.user_id) ev.user_id = user.id; }); // une la visita anónima con la cuenta
   loginDlg.close(); toast('Hola, ' + user.name.split(' ')[0]);
   track('login', {extra: {metodo: pend.provider}});
@@ -2073,13 +2116,69 @@ function signIn(isNew) {
 }
 
 // ---------- 6. Correo de bienvenida: una sola vez, al crear la cuenta. Plantilla editable en el panel. ----------
-let MAIL = {asunto: 'Bienvenido a San Bri, {{nombre}}', cuerpo: 'Hola, {{nombre}}:\n\n[POR CONFIRMAR: texto del correo de bienvenida que escribe San Bri]\n\nEquipo San Bri\n+58 414 135 6110'};
-const fill = (s, name) => s.replace(/\{\{\s*nombre\s*\}\}/g, name);
-function mailPreview(to, name) {
-  return `<div class="mail"><div class="mail-h"><span>De: <b>San Bri</b> &lt;hola@san-bri.com&gt; <span class="por">[POR CONFIRMAR: remitente]</span></span><span>Para: ${esc(to)}</span><span>Asunto: <b>${porc(fill(MAIL.asunto, name))}</b></span></div><div class="mail-b">${porc(fill(MAIL.cuerpo, name))}</div></div>`;
+// v19: textos del cliente (20 nov 2026). Remitente ebricennosanbri@gmail.com. {{nombre}} se llena con el nombre de pila.
+// Enlaces con formato [texto](url): en el correo real son botones o enlaces.
+const MAIL_FROM = 'San Bri <ebricennosanbri@gmail.com>';
+const SITE = 'https://www.san-bri.com';
+const WA_LINK = 'https://wa.me/584141356110';
+let MAILS = {
+  cliente: {etiqueta: 'Clientes',
+    asunto: '{{nombre}}, tu cuenta en San Bri está activa: ya puedes ver los precios',
+    cuerpo: `Hola {{nombre}},
+
+Tu cuenta ya está activa y acabas de desbloquear el acceso total a los precios reales de nuestro catálogo en Caracas, Venezuela.
+
+En San Bri creemos que buscar propiedad no debería ser un juego de adivinanzas ni una pérdida de tiempo pidiendo información por privado. Por eso, ahora mismo puedes ver los valores exactos y establecidos de todos nuestros apartamentos, casas, oficinas y galpones industriales.
+
+Explora con total transparencia, compara opciones reales y guarda tus favoritas.
+
+👉 [Explorar propiedades con precios desbloqueados](${SITE}/comprar)
+
+¿Ya viste un inmueble que encaja con lo que buscas o tienes un requerimiento muy específico en mente?
+
+Escríbenos directo por WhatsApp y te enviamos la ficha completa o coordinamos una visita sin compromiso: [Hablar con un asesor por WhatsApp](${WA_LINK}?text=${encodeURIComponent('Hola, acabo de crear mi cuenta en la web de San Bri')})
+
+Estamos para ayudarte a encontrar el espacio ideal.
+
+Un saludo cordial,
+
+El equipo de San Bri
+0414-135-6110 (teléfono y WhatsApp) | [www.san-bri.com](${SITE})`},
+  aliado: {etiqueta: 'Corredores y aliados (B2B)',
+    asunto: '🤝 {{nombre}}, acceso B2B activado: precios desbloqueados para cierres compartidos',
+    cuerpo: `Hola {{nombre}},
+
+Bienvenido a la red de aliados de San Bri. Tu cuenta ya está activa y tienes acceso total a los precios reales de lista de todo nuestro inventario en Caracas, Venezuela.
+
+Sabemos que en nuestro sector la agilidad lo es todo. Al iniciar sesión, eliminamos las barreras para que puedas evaluar de inmediato nuestros apartamentos, casas, oficinas comerciales y galpones industriales, y presentarlos a tus clientes con números claros desde el primer minuto.
+
+En nuestra oficina creemos en el crecimiento mutuo y en las alianzas transparentes (50/50 bajo nuestras políticas de punta y punta). Todo nuestro catálogo está captado, verificado y listo para salir a mostrar.
+
+👉 [Ver inventario disponible con precios](${SITE}/comprar)
+
+Para agilizar nuestras próximas operaciones juntos:
+
+Guarda nuestro canal directo exclusivo para aliados: [Escribir al WhatsApp de Aliados](${WA_LINK}?text=${encodeURIComponent('Hola, soy corredor aliado de San Bri')})
+
+¿Tienes un cliente buscando hoy mismo? Respóndeme a este correo o envíame su requerimiento por WhatsApp y cruzamos opciones de inmediato.
+
+Hagamos buenos negocios juntos.
+
+Éxitos en tus cierres,
+
+Gerencia Comercial
+San Bri (Corredores Reob C.A.)
+0414-135-6110 (teléfono y WhatsApp)`}};
+let mailKind = 'cliente';
+const fill = (s, name) => s.replace(/\{\{\s*nombre\s*\}\}/gi, name);
+const mailLinks = h => h.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (m, t, u) => `<a class="${/^www\./.test(t) ? 'mail-link' : 'mail-btn'}" href="${u}" target="_blank" rel="noopener">${t}</a>`);
+function mailPreview(to, name, kind = mailKind, tpl = MAILS[kind]) {
+  return `<div class="mail"><div class="mail-h"><span>De: <b>San Bri</b> &lt;ebricennosanbri@gmail.com&gt;</span><span>Para: ${esc(to)}</span><span>Asunto: <b>${porc(fill(tpl.asunto, name))}</b></span></div><div class="mail-b">${mailLinks(porc(fill(tpl.cuerpo, name)))}</div></div>`;
 }
 function showWelcome(u) {
-  document.getElementById('mail-body').innerHTML = mailPreview(u.email, u.name.split(' ')[0]);
+  const kind = u.tipo === 'aliado' ? 'aliado' : 'cliente';
+  document.getElementById('mail-title').textContent = 'Correo de bienvenida · ' + MAILS[kind].etiqueta;
+  document.getElementById('mail-body').innerHTML = mailPreview(u.email, u.name.split(' ')[0], kind);
   document.getElementById('mail-dlg').showModal();
 }
 
@@ -2130,7 +2229,7 @@ app.addEventListener('change', e => {
 
 // ---------- 8. Páginas legales (borradores) ----------
 const LEGAL_T = {privacidad: 'Política de privacidad', cookies: 'Política de cookies', terminos: 'Términos de uso'};
-const RESP = '<span class="por">[POR CONFIRMAR: razón social, RIF y dirección de San Bri]</span>';
+const RESP = 'Corredores Reob C.A. (San Bri Bienes Raíces), RIF J-31658884-0, El Hatillo, Caracas <span class="por">[POR CONFIRMAR: dirección exacta]</span>';
 const MAILTO = '<span class="por">[POR CONFIRMAR: correo para solicitudes de privacidad]</span>';
 const LEGAL = {
   privacidad: `<p>Esta política explica qué datos recoge San Bri Bienes Raíces en este sitio, para qué los usa y cómo puedes ejercer tus derechos.</p>
@@ -2256,9 +2355,11 @@ function chartsTab() {
     <p class="admin-note" style="margin-top:20px">Cada noche, y con “Analizar ahora”, el resumen se copia a la hoja de Google Sheets: pestaña Resumen (una fila por cliente, con gráficas), pestaña Eventos y una pestaña por cliente solo para los tibios y calientes.</p>`;
 }
 function mailTab() {
-  return `<p class="admin-note">Se envía una sola vez, cuando la persona crea su cuenta, al correo con el que se registró. Usa {{nombre}} para el nombre.</p>
-    <div class="tpl"><form class="form" id="mail-form"><label for="m-subj">Asunto<input id="m-subj" type="text" value="${esc(MAIL.asunto)}"></label>
-      <label for="m-body">Cuerpo<textarea id="m-body" rows="10">${esc(MAIL.cuerpo)}</textarea></label>
+  const T = MAILS[mailKind];
+  return `<p class="admin-note">Se envía una sola vez, cuando la persona crea su cuenta, desde ebricennosanbri@gmail.com al correo con el que se registró. Al crear la cuenta la persona elige si busca inmueble o si es corredor aliado, y recibe el correo que le corresponde. Usa {{nombre}} para el nombre y [texto](enlace) para un botón.</p>
+    <div class="tpl-pick" role="group" aria-label="Plantilla">${Object.entries(MAILS).map(([k, m]) => `<button type="button" data-mailkind="${k}" aria-pressed="${k === mailKind}">${m.etiqueta}</button>`).join('')}</div>
+    <div class="tpl"><form class="form" id="mail-form"><label for="m-subj">Asunto<input id="m-subj" type="text" value="${esc(T.asunto)}"></label>
+      <label for="m-body">Cuerpo<textarea id="m-body" rows="16">${esc(T.cuerpo)}</textarea></label>
       <button class="btn" type="submit" style="justify-self:start">Guardar plantilla</button></form>
       <div><p class="muted" style="font-size:13px;margin-bottom:8px">Vista previa</p><div id="mail-live">${mailPreview('cliente@correo.com', 'María')}</div></div></div>`;
 }
@@ -2278,12 +2379,15 @@ document.addEventListener('click', e => {
 });
 app.addEventListener('input', e => {
   if (e.target.id !== 'm-subj' && e.target.id !== 'm-body') return;
-  const keep = MAIL; MAIL = {asunto: document.getElementById('m-subj').value, cuerpo: document.getElementById('m-body').value};
-  document.getElementById('mail-live').innerHTML = mailPreview('cliente@correo.com', 'María'); MAIL = keep;
+  document.getElementById('mail-live').innerHTML = mailPreview('cliente@correo.com', 'María', mailKind, {asunto: document.getElementById('m-subj').value, cuerpo: document.getElementById('m-body').value});
 });
 app.addEventListener('submit', e => {
   if (e.target.id !== 'mail-form') return;
-  e.preventDefault(); MAIL = {asunto: document.getElementById('m-subj').value, cuerpo: document.getElementById('m-body').value}; toast('Plantilla guardada');
+  e.preventDefault(); MAILS[mailKind] = {...MAILS[mailKind], asunto: document.getElementById('m-subj').value, cuerpo: document.getElementById('m-body').value}; toast('Plantilla guardada');
+});
+app.addEventListener('click', e => {
+  const b = e.target.closest('[data-mailkind]'); if (!b) return;
+  mailKind = b.dataset.mailkind; render();
 });
 
 go('home');
