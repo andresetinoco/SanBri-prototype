@@ -933,6 +933,34 @@ footer a.wa-num{color:inherit;text-decoration:underline;text-underline-offset:3p
 .who{border:0;margin:0;padding:0;display:grid;gap:8px}
 .who legend{font-size:14px;font-weight:600;margin-bottom:6px;padding:0}
 .form .who label,.who label{display:flex;gap:10px;align-items:flex-start;font-size:14px;font-weight:400;letter-spacing:0;text-transform:none;cursor:pointer}
+
+/* v20 (22 nov): más contraste. El banner lleva fondo marino y un recuadro translúcido detrás del texto;
+   "Quiénes somos" pasa a una franja marina con texto claro. Arreglo: la foto del banner nunca aparecía
+   porque el observador de scroll no detecta un elemento recortado por clip-path; ahora se recorta la imagen. */
+:root,:root[data-theme="light"]{--about-bg:#1A3351;--about-ink:#FFFFFF;--about-muted:#C9D6E6;--about-line:rgba(255,255,255,.22)}
+:root[data-theme="dark"]{--about-bg:#16233A;--about-ink:#FFFFFF;--about-muted:#B9C7D8;--about-line:rgba(255,255,255,.16)}
+.feature{background:#1A3351}
+.feature-ph{background:#1A3351}
+.feature-ph::after{background:linear-gradient(180deg,rgba(12,22,38,.30),rgba(12,22,38,.55))}
+.rv-on .feature-ph.rv{clip-path:none}
+.rv-on .feature-ph.rv img{clip-path:inset(0 0 100% 0);transition:clip-path 1.7s var(--ease-out),scale 2.4s var(--ease-out)}
+.rv-on .feature-ph.rv.in img{clip-path:inset(0)}
+@media (prefers-reduced-motion:reduce){.rv-on .feature-ph.rv img{clip-path:none}}
+.feature .wrap{background:rgba(14,28,50,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:clamp(32px,5vw,56px) clamp(22px,4.5vw,64px);width:auto;max-width:min(940px,calc(100% - 32px))}
+.feature h2{color:#fff}
+.feature p{color:#fff;opacity:1}
+.feature .btn.ghost{color:#fff;border-color:#fff;background:rgba(255,255,255,.08)}
+.feature .btn.ghost:hover{background:#fff;color:#1A3351}
+@media(max-width:600px){.feature .wrap{max-width:calc(100% - 24px)}}
+.about{background:var(--about-bg);color:var(--about-ink)}
+.about h2,.about .about-lead,.about .stats dd,.about .agent-name{color:var(--about-ink)}
+.about .muted,.about .stats dt,.about .agent-area{color:var(--about-muted)}
+.about .stats{border-top-color:var(--about-line)}
+.about .agent-ph{background:rgba(255,255,255,.12)}
+.about .agent-wa{color:#fff}
+.about .btn.light,.about .btn.ghost{color:#fff;border-color:#fff;background:transparent}
+.about .btn.light:hover,.about .btn.ghost:hover{background:#fff;color:#1A3351}
+.about :focus-visible{outline-color:#fff}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
